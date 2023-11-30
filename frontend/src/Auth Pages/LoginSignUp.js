@@ -38,8 +38,8 @@ const LoginSignUp = () => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState("/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState("/assets/Profile.png");
+  const [avatarPreview, setAvatarPreview] = useState("/assets/Profile.png");
 
   const loginSubmit = (e) => {
     e.preventDefault();
