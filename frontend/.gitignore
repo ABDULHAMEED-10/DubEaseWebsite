@@ -4,7 +4,7 @@
 /frontend/.pnp
 /frontend/.pnp.js
 /frontend/package-lock.json
-/package-lock.json
+
 # testing
 /frontend/coverage
 
@@ -12,6 +12,7 @@
 /frontend/build
 
 # misc
+/backend/config/config.env
 /frontend/.DS_Store
 /frontend/.env.local
 /frontend/.env.development.local
