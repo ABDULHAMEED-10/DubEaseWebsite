@@ -147,7 +147,7 @@ audio{
     font: 400 1.1vmax cursive;
 }
 
-.startButton > button,
+.startButton > input,
 .onCameraIcons > button,
 .onVoiceIcons > button{
     text-align: center;
@@ -162,7 +162,7 @@ audio{
     
     
 }
-.startButton > button:hover{
+.startButton > input:hover{
     background-color: #ffc009;
 }
 .onCameraIcons>button{

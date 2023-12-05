@@ -1,17 +1,28 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, {Fragment,useState, useCallback, useRef, useEffect } from "react";
 import "../CSS/StartDubbing.css";
 import Webcam from "react-webcam";
+import MetaData from "../../layout/MetaData";
 import { useAlert } from "react-alert";
 import ReactPlayer from "react-player";
 import { AudioRecorder } from "react-audio-voice-recorder";
 import ReactAudioPlayer from "react-audio-player";
 import { Tooltip } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../layout/Loader/Loader";
+import { generate_Dub } from "../../actions/dubbingAction";
+
 
 const StartVideoRecordUpload = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const alert = useAlert();
   const [videoFileName, setVideoFileName] = useState(null);
- 
+  const [source, setSource] = useState(null);
+
+
+  const dispatch = useDispatch();
+
+  const alert = useAlert();
+
+
   const onFileChangeVideo = (e) => {
     setVideoFileName(e.target.files[0]);
   };
@@ -21,9 +32,13 @@ const StartVideoRecordUpload = () => {
 
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
+    
+    
     if (file) {
-      const validVideoTypes = ['video/mp4']; 
+
+      const validVideoTypes = ['video/mp4','video/webm']; 
       if (validVideoTypes.includes(file.type)) {
+        setSource(file)
         setSelectedVideo(URL.createObjectURL(file));
         onFileChangeVideo(event);
       } else {
@@ -37,8 +52,6 @@ const StartVideoRecordUpload = () => {
   };
   
 
-  const StartDubbing = () => {};
-
   /////////////////////////
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -47,16 +60,6 @@ const StartVideoRecordUpload = () => {
   const [camera, setCamera] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
 
-  useEffect(() => {
-    if (camera) {
-      const timer = setTimeout(() => {
-        setShowButtons(true);
-      }, 3000);
-      return () => clearTimeout(timer);
-    } else {
-      setShowButtons(false);
-    }
-  }, [camera]);
 
   const handleDataAvailable = useCallback(
     ({ data }) => {
@@ -128,6 +131,7 @@ const StartVideoRecordUpload = () => {
     if (file) {
       const validAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3']; 
       if (validAudioTypes.includes(file.type)) {
+        setSource(file);
         setSelectedFile(URL.createObjectURL(file));
         onFileChangeAudio(event);
       } else {
@@ -148,7 +152,36 @@ const StartVideoRecordUpload = () => {
     document.body.appendChild(audio);
   };
 
+  const StartDubbing = (e) => {
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.append("source", source);
+    dispatch(generate_Dub(myForm));
+    
+  };
+  let {err,loading} = useSelector(
+    (state) => state
+  );
+
+  useEffect(() => {
+    
+    if (camera) {
+      const timer = setTimeout(() => {
+        setShowButtons(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowButtons(false);
+    }
+  }, [camera,err]);
   return (
+    <Fragment>
+    {loading ? (
+      <Loader />
+    ) : (
+          <Fragment>
+          <MetaData title="Dub Video" />
+            
     <div className="container-fluid bg-dark text-white container">
       <div className="vh-100 toogleContainer col-md-8">
         <div className="Header">
@@ -160,7 +193,8 @@ const StartVideoRecordUpload = () => {
         </div>
 
         {/* -------------------------------------------------------- */}
-        {/* video part */}
+                {/* video part */}
+        
         <div className="mainVideoBox" ref={VideoTab}>
           {/* video box start  */}
           <div className="videoBox ">
@@ -175,7 +209,8 @@ const StartVideoRecordUpload = () => {
             </div>
 
             <div className="dubbedVideoBox"></div>
-          </div>
+                    </div>
+        
           {/* video box end */}
           {/* audio box start */}
           <div className="AudioBox ">
@@ -192,27 +227,33 @@ const StartVideoRecordUpload = () => {
             <div className="dubbedAudioBox"></div>
           </div>
 
-          <div className="mainUploadRecordVideoAudio">
+          <div className="mainUploadRecordVideoAudio" >
             <div className="uploadVideo">
-              <div className="browseVideo">
+              <form className="browseVideo" id="myForm" method="POST" encType="multipart/form-data" onSubmit={StartDubbing}>
                 <label htmlFor="inp">Browse Video</label>
+                <label style={{visibility:"hidden"}} htmlFor="inputButton"></label>
+                        
                 {videoFileName?.name && (
                   <p className="videoFileName">
                     {videoFileName.name.split(" ").slice(0, 2).join(" ")}
                     {videoFileName.name.split(" ").length > 2 && "..."}
                   </p>
                 )}
-                <input
-                  type="file"
-                  id="inp"
-                  accept="video/mp4"
-                  style={{ display: "none" }}
-                  onChange={handleVideoChange}
-                />
-              </div>
+                        <input
+                          type="file"
+                          id="inp"
+                          name="source"
+                          accept="video/mp4"
+                          style={{ display: "none" }}
+                          onChange={handleVideoChange} 
+                        />
+                      
+              </form>
 
-              <div className="browseAudio">
+              <form className="browseAudio" id="myForm" method="POST" encType="multipart/form-data" onSubmit={StartDubbing}>
                 <label htmlFor="input-file">Browse Audio</label>
+                <label style={{visibility:"hidden"}} htmlFor="inputButton"></label>
+                        
                 {audioFileName?.name && (
                   <p className="audioFileName">
                     {audioFileName.name.split(" ").slice(0, 2).join(" ")}
@@ -221,12 +262,13 @@ const StartVideoRecordUpload = () => {
                 )}
                 <input
                   type="file"
-                  id="input-file"
+                          id="input-file"
+                          name="source"
                   accept="audio/mp3"
                   style={{ display: "none" }}
                   onChange={handleAudioChange}
                 />
-              </div>
+              </form>
 
               
             </div>
@@ -264,9 +306,8 @@ const StartVideoRecordUpload = () => {
         </div>
 
         <div className="startButton">
-          <button type="submit" onClick={StartDubbing}>
-            <span>Generate</span>
-          </button>
+          <input value="Generate" id="inputButton" form="myForm" type="submit" />
+          
         </div>
       </div>
 
@@ -314,6 +355,9 @@ const StartVideoRecordUpload = () => {
         </div>
       </div>
     </div>
-  );
+    </Fragment>
+    )}
+  </Fragment>
+);
 };
 export default StartVideoRecordUpload;

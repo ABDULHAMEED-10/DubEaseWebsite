@@ -17,33 +17,35 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
     let myCloud; 
     try {
         myCloud = await cloudinary.uploader.upload(req.body.avatar, opt);
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: "Image Size Exceed: Allowed less than 1mb",
-        });
-    }
-    const { name, email, password } = req.body;
     
-    try {
-        const user =await User.create({
-          name,
-          email,
-          password,
-          avatar: {
-            "public_id": myCloud.public_id,
-            "url": myCloud.secure_url,
-          },
-          createdAt: Date.now(), 
+        
+    
+        const { name, email, password } = req.body;
+    
+   
+        const user = await User.create({
+            name,
+            email,
+            password,
+            avatar: {
+                "public_id": myCloud.public_id,
+                "url": myCloud.secure_url,
+            },
+            createdAt: Date.now(),
         });
-        sendToken(user,201,res);
-      
-      } catch (error) {
+        sendToken(user, 201, res);
+    }
+    catch (error) {
         if (error.code === 11000 && error.keyPattern.email === 1) {
             res.status(400).json({success:false, message: 'Email already exists.' });
-          } else {
+        }
+
+        else {
+            res.status(400).json({
+                success: false,
+                message: "Image Size Exceed: Allowed less than 1mb",
+            });
            
-            res.status(500).json({success:false, message: 'User creation failed.' });
           }
       }
       
@@ -190,7 +192,8 @@ exports.getUserDetails = catchAsncError(async (req, res, next) => {
     
 })
 //update password
-exports.updateUserPassword = catchAsncError(async (req, res, next) => { 
+exports.updateUserPassword = catchAsncError(async (req, res, next) => {
+    
     const user = await User.findById(req.user.id).select("+password");
     
     const isOldPasswordMatched = await bcrypt.compare(req.body.oldPassword,user.password);
@@ -211,37 +214,47 @@ exports.updateUserPassword = catchAsncError(async (req, res, next) => {
 })
 //update profile
 exports.updateProfile = catchAsncError(async (req, res, next) => {
-    const newUserData = {
+    try {
+      const newUserData = {
         name: req.body.name,
         email: req.body.email,
       };
-    
+  
       if (req.body.avatar !== "") {
         const user = await User.findById(req.user.id);
-    
+  
         const imageId = user.avatar.public_id;
-    
+  
         await cloudinary.v2.uploader.destroy(imageId);
-    
+  
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
           folder: "avatars",
           width: 150,
           crop: "scale",
+          bytes: 548576,
         });
-    
+  
         newUserData.avatar = {
           public_id: myCloud.public_id,
           url: myCloud.secure_url,
         };
       }
-    
+  
       const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
       });
-    
+  
       res.status(200).json({
         success: true,
       });
-    });
+    } catch (error) {
+      // Handle errors
+      res.status(500).json({
+        success: false,
+        error: error.message, // Send the error message to the client
+      });
+    }
+});
+  

@@ -84,12 +84,9 @@ useEffect(() => {
     dispatch(clearErrors());
   }
   
-
   if (isAuthenticated) {
     navigate(redirect)
-    
 
-    
   }
 }, [dispatch, error, alert, isAuthenticated,navigate]);
 
@@ -149,7 +146,7 @@ return (
               <Link to="/password/forgot" className="forget">Forget Password ?</Link>
                 <input type="submit" value="Login" className="loginBtn" />
                  
-    </form>
+            </form>
             <form
               className="signUpForm"
               ref={registerTab}

@@ -12,8 +12,6 @@ import { useSelector } from "react-redux";
 import store from './store';
 import { loadUser } from './actions/userAction';
 import StartVideoDubbing from './Home/pages/StartVideoDubbing';
-
-
 import Root from './Home/pages/Root';
 import About from './Home/pages/About';
 import Home from './Home/pages/Home';
@@ -34,9 +32,7 @@ const App = () => {
     <Router>
       
       <div>
-      
-      
-             
+  
         <Routes>
           
         <Route path="/" element={<Root />}>

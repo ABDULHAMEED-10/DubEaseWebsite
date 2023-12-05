@@ -1,8 +1,11 @@
 import React from 'react';
 import ContactForm from "../components/ContactForm";
+import Navbar from "../components/Navbar";
 
 const About = () => {
   return (
+    <>
+      <Navbar/>
     <div className="container-fluid mt-5">
       <div className="row">
         <div className="col-md-6">
@@ -63,7 +66,8 @@ const About = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      </>
   );
 };
 
