@@ -16,18 +16,15 @@ export const generate_Dub = (source) => async (dispatch) => {
 
     dispatch({ type: GENERATE_DUB_REQUEST });
       const config = {
-        // headers: { "Content-Type": "application/json" },
         headers: { "Content-Type": "multipart/form-data" }
     };
-      await axios.post(
-        `http://localhost:5000/flask/generateDub`,
-        {source},
-        config
+    const response = await axios.post(
+      'http://localhost:5000/flask/generateDub',
+      source,
+      config
     );
-      
       dispatch({ type: GENERATE_DUB_SUCCESS});
     } catch (error) {
-      
       dispatch({ type: GENERATE_DUB_FAILURE, payload: error.response.data.message });
     }
 };
