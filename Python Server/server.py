@@ -62,6 +62,7 @@ def save_text_to_file(text, output_file):
 
 try:
     # Define paths
+    # replace [Small_Talk_-_Everyday_English.mp4] with [filename]
     video_path = os.path.join('E:/DubEase/Python Server/uploads/' ,"Small_Talk_-_Everyday_English.mp4")
     audio_output_path = 'output/myaudio.wav'
     text_output_path = 'output/translated_text.txt'

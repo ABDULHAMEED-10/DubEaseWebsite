@@ -16,7 +16,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    background-color: #9f40ec; 
+    /* background-color: #9f40ec;  */
+    background-color: #1b1a1a;
     border: none;
     
     
