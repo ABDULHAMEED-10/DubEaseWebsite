@@ -27,3 +27,5 @@ yarn-error.log*
 venv/
 output/
 uploads/
+__pycache__/
+Predicted_Emotion_Video/

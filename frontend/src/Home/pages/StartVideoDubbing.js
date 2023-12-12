@@ -41,13 +41,14 @@ const StartVideoRecordUpload = () => {
     if (file) {
       const validVideoTypes = ['video/mp4', 'video/webm'];
       if (validVideoTypes.includes(file.type)) {
-
+        console.log("ok")
         setVideoFileName(null);
         setSource(file)
         setVideoUploaded(true);
         setSelectedVideo(URL.createObjectURL(file));
         onFileChangeVideo(event);
       } else {
+        
         setSelectedVideo(null);
         setVideoUploaded(false);
         alert.error('Please select a valid video file');
@@ -133,7 +134,7 @@ const StartVideoRecordUpload = () => {
   const handleAudioChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3'];
+      const validAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3','audio/webm'];
       if (validAudioTypes.includes(file.type)) {
         setSource(file);
         setAudioUploaded(true);
@@ -276,7 +277,7 @@ const StartVideoRecordUpload = () => {
                         type="file"
                         id="inp"
                         name="source"
-                        accept="video/mp4"
+                        accept="video/mp4,video/webm"
                         style={{ display: "none" }}
                         onChange={handleVideoChange}
                       />
@@ -299,7 +300,7 @@ const StartVideoRecordUpload = () => {
                         type="file"
                         id="input-file"
                         name="source"
-                        accept="audio/mp3"
+                        accept="audio/*"
                         style={{ display: "none" }}
                         onChange={handleAudioChange}
                       />

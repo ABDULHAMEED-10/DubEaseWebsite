@@ -3,6 +3,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 from DubVideo import process_video
+from model import emotionFaceDetectorModel
 
 app = Flask(__name__)
 app.config['uploads'] = 'E:/DubEase/Python Server/uploads'
@@ -19,7 +20,12 @@ def Dub():
             filename = secure_filename(f.filename)
 
             try:
+                
                 process_video(filename)
+                print("Translation has been done")
+                emotionFaceDetectorModel(filename)
+                print("Emotion detection has been done")
+
                 return jsonify({"message": "Data sent successfully", "status": "success"}), 200
             except Exception as e:
                 return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
