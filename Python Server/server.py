@@ -20,11 +20,14 @@ def Dub():
             filename = secure_filename(f.filename)
 
             try:
-                
-                process_video(filename)
-                print("Translation has been done")
-                emotionFaceDetectorModel(filename)
-                print("Emotion detection has been done")
+                if filename.lower().endswith('.mp4'):
+                    process_video(filename)
+                    print("Translation has been done")
+                    emotionFaceDetectorModel(filename)
+                    print("Emotion detection has been done")
+                else:
+                    process_video(filename)
+                    print("Translation has been done")
 
                 return jsonify({"message": "Data sent successfully", "status": "success"}), 200
             except Exception as e:

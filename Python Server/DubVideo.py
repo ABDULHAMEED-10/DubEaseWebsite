@@ -3,9 +3,9 @@ import moviepy.editor as mp
 import speech_recognition as sr
 from googletrans import Translator
 import os
-
-from moviepy.editor import VideoFileClip
+from moviepy.editor import *
 import os
+
 
 def extract_audio(video_path, audio_output_path):
   
@@ -17,6 +17,7 @@ def extract_audio(video_path, audio_output_path):
 
 
 def convert_audio_to_text(audio_path):
+    print("Processing Audio")
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_path) as source:
         try:
@@ -26,6 +27,7 @@ def convert_audio_to_text(audio_path):
             raise Exception("Audio is inaudible. Please choose a different video.")
         except sr.RequestError as e:
             raise Exception(f"Could not request results from Google Speech Recognition service; {e}")
+        
     return audio_text
 
 def translate_text(text, target_language='urdu'):
@@ -39,19 +41,23 @@ def save_text_to_file(text, output_file):
 
 def process_video(filename):
     video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
-    pathOfAudioFile = 'output/'
+    pathOfAudioFile = 'output/audio/'
     audioFileExtension = 'myaudio.wav'
-    words_to_remove = [".mp4", ".webm" , ".mp3"]
+    words_to_remove = [".mp4", ".webm" , ".mp3" , ".wav"]
     for word in words_to_remove:
         filename = filename.replace(word, "")
     audio_output_path = f'{pathOfAudioFile}{filename}{audioFileExtension}'
-    pathOfTextFile = 'output/'
+    pathOfTextFile = 'output/text/'
     textFileExtension = 'translated_text.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
-    # Extract audio from the video
-    
-    extract_audio(video_path, audio_output_path)
-  
+
+
+    if video_path.lower().endswith('.wav'):
+        audio_output_path = video_path  
+
+    else:
+        # Extract audio from the video
+        extract_audio(video_path, audio_output_path)
     # Convert audio to text
     audio_text = convert_audio_to_text(audio_output_path)
 

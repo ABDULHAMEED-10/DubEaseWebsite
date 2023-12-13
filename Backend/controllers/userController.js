@@ -37,11 +37,11 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
             res.status(400).json({success:false, message: 'Email already exists.' });
         }
         if (error.code === 500) {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Image size exceed limits",
             });
-            return
+            
         }
 
         else {
@@ -58,29 +58,29 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
 exports.loginUser = catchAsncError(async (req, res, next) => {
     let { email, password } = req.body;
         if (!email && !password) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Please Enter email and password",
             });
-            return
+            
             
         }
         const user = await User.findOne({ email }).select("+password");
         if (!user) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Invalid email and Password",
             });
-            return
+            
             
         }
         const isPasswordMatched = await bcrypt.compare(password, user.password);
         if (!isPasswordMatched) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 message: "Invalid Password",
             });
-            return
+            
 
     
     }
@@ -125,7 +125,7 @@ exports.forgetPassword = catchAsncError(async (req, res, next) => {
             .createHash("sha256")
             .update(resetToken)
             .digest("hex");
-        user.resetPasswordExpire = Date.now() + 25 * 60 * 1000;
+        user.resetPasswordExpire = Date.now() + 5 * 60 * 1000;
         await user.save({ validateBeforeSave: false });
         const resetPasswordURL = `${req.protocol}://localhost:3000/password/reset/${resetToken}`;
         const message = `<p><strong>Subject:</strong> Password Reset Request</p>
@@ -153,10 +153,10 @@ exports.forgetPassword = catchAsncError(async (req, res, next) => {
             });
          
       
-   
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
-                message: `Email send to ${user.email} successfully`,
+                message: `Email send successfully`,
+                
             });
    
         }
@@ -164,7 +164,11 @@ exports.forgetPassword = catchAsncError(async (req, res, next) => {
             user.resetPasswordToken = undefined;
             user.resetPasswordExpire = undefined;
             await user.save({ validateBeforeSave: false });
-            return next(new ErrorHandler(error.stack, 500));
+            return res.status(500).json({
+                success: false,
+                message: `Email send unsuccessfully`,
+            });
+            // return next(new ErrorHandler(error.stack, 500));
         
         }
     }
@@ -266,16 +270,14 @@ exports.updateProfile = catchAsncError(async (req, res, next) => {
   
       if (req.body.avatar !== "") {
         const user = await User.findById(req.user.id);
-  
         const imageId = user.avatar.public_id;
-  
+          
+          
         await cloudinary.v2.uploader.destroy(imageId);
-  
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
           folder: "avatars",
           width: 150,
           crop: "scale",
-          bytes: 548576,
         });
   
         newUserData.avatar = {
@@ -296,23 +298,23 @@ exports.updateProfile = catchAsncError(async (req, res, next) => {
     }
     catch (error) {
         if (error.code === 11000 && error.keyPattern.email === 1) {
-            res.status(400).json({ success: false, message: 'Email already exists.' });
-            return
+            return res.status(400).json({ success: false, message: 'Email already exists.' });
+            
         }
         if (error.code === 500) {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Image size exceed limits",
             });
-            return
+            
         }
 
         else {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
-                message: "Error while registeration",
+                message: "Error while updating Profile",
             });
-            return
+            
            
           }
       }

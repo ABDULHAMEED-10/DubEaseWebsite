@@ -39,9 +39,8 @@ const StartVideoRecordUpload = () => {
 
 
     if (file) {
-      const validVideoTypes = ['video/mp4', 'video/webm'];
+      const validVideoTypes = ['video/mp4'];
       if (validVideoTypes.includes(file.type)) {
-        console.log("ok")
         setVideoFileName(null);
         setSource(file)
         setVideoUploaded(true);
@@ -82,7 +81,7 @@ const StartVideoRecordUpload = () => {
     if (camera) {
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-        mimeType: "video/webm",
+        mimeType: "video/mp4",
       });
       mediaRecorderRef.current.addEventListener(
         "dataavailable",
@@ -104,14 +103,14 @@ const StartVideoRecordUpload = () => {
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
-        type: "video/webm",
+        type: "video/mp4",
       });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = "react-webcam-stream-capture.webm";
+      a.download = "react-webcam-stream-capture.mp4";
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
@@ -134,7 +133,7 @@ const StartVideoRecordUpload = () => {
   const handleAudioChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validAudioTypes = ['audio/mpeg', 'audio/wav', 'audio/mp3','audio/webm'];
+      const validAudioTypes = ['audio/wav'];
       if (validAudioTypes.includes(file.type)) {
         setSource(file);
         setAudioUploaded(true);
@@ -277,7 +276,7 @@ const StartVideoRecordUpload = () => {
                         type="file"
                         id="inp"
                         name="source"
-                        accept="video/mp4,video/webm"
+                        accept="video/mp4"
                         style={{ display: "none" }}
                         onChange={handleVideoChange}
                       />
@@ -300,7 +299,7 @@ const StartVideoRecordUpload = () => {
                         type="file"
                         id="input-file"
                         name="source"
-                        accept="audio/*"
+                        accept="audio/wav"
                         style={{ display: "none" }}
                         onChange={handleAudioChange}
                       />
@@ -337,7 +336,7 @@ const StartVideoRecordUpload = () => {
                           echoCancellation: true,
                         }}
                         downloadOnSavePress={true}
-                        downloadFileExtension="webm"
+                        downloadFileExtension="wav"
                         />
                         
                       </div>
