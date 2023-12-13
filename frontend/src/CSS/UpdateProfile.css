@@ -6,8 +6,9 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0%;
-    background-color: black;
+    top: 5%;
+    background-color: rgb(38, 35, 35);
+
 
     left: 0;
   }

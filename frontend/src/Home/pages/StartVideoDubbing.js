@@ -10,7 +10,7 @@ import { Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../layout/Loader/Loader";
 import { generate_Dub } from "../../actions/dubbingAction";
-
+import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 
 
 const StartVideoRecordUpload = () => {
@@ -214,9 +214,9 @@ const StartVideoRecordUpload = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Dub Video" />
-
-          <div className="container-fluid bg-dark text-white container">
+            <MetaData title="Dub Video" />
+            <Navbar/>
+          <div className="container-fluid bg-dark text-white container" style={{zIndex:"-1"}}>
             <div className="vh-100 toogleContainer col-md-8">
               <div className="Header">
                 <div className="Audio_Video_toggle">

@@ -4,6 +4,7 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import "../CSS/Profile.css";
+import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 
 const Profile = () => {
   let { user, loading, isAuthenticated } = useSelector((state) => state.user);
@@ -19,15 +20,19 @@ const Profile = () => {
   }, [navigate, isAuthenticated]);
 
   return (
+    
+      
     <Fragment>
       {loading ? (
         <Loader />
       ) : (
-        <Fragment>
-          <MetaData title={`${user.name}'s Profile`} />
-          <div className="profileContainer">
+          <Fragment>
+          <Navbar/>
+            <MetaData title={`${user.name}'s Profile`} />
+          
+          <div className="profileContainer" style={{zIndex:"-1"}}>
             <div>
-                <h1>My Profile</h1>
+               
                 {/* below one line code is actual src for some reason i am not using this */}
                 {/* user.avatar.url */}
                 {/* for text you can add /profile.png in src */}
@@ -57,6 +62,7 @@ const Profile = () => {
         </Fragment>
       )}
     </Fragment>
+    
   );
 };
 

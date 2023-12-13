@@ -9,6 +9,7 @@ import { useAlert } from "react-alert";
 import { UPDATE_PROFILE_RESET } from "../constants/userConstants";
 import MetaData from "../layout/MetaData";
 import { useNavigate } from "react-router-dom";
+import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 
 
 const UpdateProfile = () => {
@@ -75,8 +76,9 @@ const UpdateProfile = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Update Profile" />
-          <div className="updateProfileContainer">
+            <MetaData title="Update Profile" />
+            <Navbar/>
+          <div className="updateProfileContainer" style={{zIndex:"-1"}}>
             <div className="updateProfileBox">
               <h2 className="updateProfileHeading">Update Profile</h2>
 

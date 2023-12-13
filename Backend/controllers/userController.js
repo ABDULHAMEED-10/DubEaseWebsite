@@ -17,9 +17,6 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
     let myCloud; 
     try {
         myCloud = await cloudinary.uploader.upload(req.body.avatar, opt);
-    
-        
-    
         const { name, email, password } = req.body;
     
    
@@ -39,11 +36,18 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
         if (error.code === 11000 && error.keyPattern.email === 1) {
             res.status(400).json({success:false, message: 'Email already exists.' });
         }
+        if (error.code === 500) {
+            res.status(500).json({
+                success: false,
+                message: "Image size exceed limits",
+            });
+            return
+        }
 
         else {
             res.status(400).json({
                 success: false,
-                message: "Image Size Exceed: Allowed less than 1mb",
+                message: "Error while registeration",
             });
            
           }
@@ -53,21 +57,35 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
 //login user
 exports.loginUser = catchAsncError(async (req, res, next) => {
     let { email, password } = req.body;
-        if (!email || !password) {
-            return next(new ErrorHandler("Please Enter Email and password", 400));
+        if (!email && !password) {
+            res.status(400).json({
+                success: false,
+                message: "Please Enter email and password",
+            });
+            return
             
         }
         const user = await User.findOne({ email }).select("+password");
         if (!user) {
-            return next(new ErrorHandler("invalid Email and Password"));
-    
+            res.status(400).json({
+                success: false,
+                message: "Invalid email and Password",
+            });
+            return
+            
         }
         const isPasswordMatched = await bcrypt.compare(password, user.password);
         if (!isPasswordMatched) {
-            return next(new ErrorHandler("Invalid email or password", 401));
+            res.status(400).json({
+                success: false,
+                message: "Invalid Password",
+            });
+            return
+
     
-        }
-        sendToken(user, 200, res); 
+    }
+    
+    sendToken(user, 200, res); 
        
 });
 //log out user
@@ -86,27 +104,37 @@ exports.logout = catchAsncError(async (req, res) => {
 
 //forgot password
 exports.forgetPassword = catchAsncError(async (req, res, next) => {
+    //reset password
+ 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-        return next(new ErrorHandler("User not Found", 404));
-    }
-    //get reset Password token
-    const resetToken =  user.getResetPasswordToken() ;
-    
-    
-    await user.save({ validateBeforeSave: false });
    
-
-    const resetPasswordURL = `${req.protocol}://localhost:3000/password/reset/${resetToken}`;
-
-
-    const message = `<p><strong>Subject:</strong> Password Reset Request</p>
+    if (!user) {
+        
+        return res.status(404).json({
+            success: false,
+            message: `No User registered with Email `,
+        });
+         
+    }
+    else {
+        //get reset Password token
+       
+        const resetToken = crypto.randomBytes(20).toString("hex");
+        //hashing and storing in resetpasswordtoken in schema
+        user.resetPasswordToken = crypto
+            .createHash("sha256")
+            .update(resetToken)
+            .digest("hex");
+        user.resetPasswordExpire = Date.now() + 25 * 60 * 1000;
+        await user.save({ validateBeforeSave: false });
+        const resetPasswordURL = `${req.protocol}://localhost:3000/password/reset/${resetToken}`;
+        const message = `<p><strong>Subject:</strong> Password Reset Request</p>
     <br>
     <p>Dear ${user.name},</p>
     <br>
     <p>We have received a request to reset your password for your ${user.name} account.
-    To proceed with the password reset, Please click on the following link:</p>
-    <a href="${resetPasswordURL}">Reset Password</a>
+    To proceed with the password reset, Please copy and paste in Browser on the following link:</p>
+    <p>${resetPasswordURL}</p>
     <br>
     <p>If you did not initiate this request, please ignore this email. Your account is <strong>Secure</strong>, and no changes will be made.</p>
     <br>
@@ -116,26 +144,29 @@ exports.forgetPassword = catchAsncError(async (req, res, next) => {
     <p>Best regards,<br>The DubEase Team</p>`;
    
     
-    try {
-        await sendEmail({
-            email: user.email,
-            subject: "Password Reset Request",
-            message,
-        });
+        try {
+        
+            await sendEmail({
+                email: user.email,
+                subject: "Password Reset Request",
+                message,
+            });
+         
       
    
-    res.status(200).json({
-        success: true,
-        message: `Email send to Your account successfully`,
-    });
+            res.status(200).json({
+                success: true,
+                message: `Email send to ${user.email} successfully`,
+            });
    
-    }
-    catch (error) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
-        await user.save({ validateBeforeSave: false });
-        return next(new ErrorHandler(error.stack, 500));
+        }
+        catch (error) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return next(new ErrorHandler(error.stack, 500));
         
+        }
     }
 });
 
@@ -158,14 +189,19 @@ exports.resetPassword = catchAsncError(async (req, res, next) => {
     
     
     if (!user) {
-       
-        return next(new ErrorHandler("Reset password token is expired or invalid", 400));
+        return res.status(400).json({
+            success: false,
+            message: `Reset Password Token Expire `,
+        });
         
     }
    
    
     if (req.body.password !== req.body.confirmedPassword) {
-        return next(new ErrorHandler("Password does not matched", 400));
+        return res.status(400).json({
+            success: false,
+            message: `Password Does not matched `,
+        });
         
     }
    
@@ -198,11 +234,19 @@ exports.updateUserPassword = catchAsncError(async (req, res, next) => {
     
     const isOldPasswordMatched = await bcrypt.compare(req.body.oldPassword,user.password);
     if (!isOldPasswordMatched) {
-        return next(new ErrorHandler("Old Password is incorrect", 401));
+        res.status(401).json({
+            success: false,
+            message: "Invalid old password",
+        });
+        return
 
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-        return next(new ErrorHandler("Passwords Does not match", 401));
+        res.status(401).json({
+            success: false,
+            message: "password does not match",
+        });
+        return
 
     }
     user.password = req.body.newPassword
@@ -249,12 +293,28 @@ exports.updateProfile = catchAsncError(async (req, res, next) => {
       res.status(200).json({
         success: true,
       });
-    } catch (error) {
-      // Handle errors
-      res.status(500).json({
-        success: false,
-        error: error.message, // Send the error message to the client
-      });
     }
+    catch (error) {
+        if (error.code === 11000 && error.keyPattern.email === 1) {
+            res.status(400).json({ success: false, message: 'Email already exists.' });
+            return
+        }
+        if (error.code === 500) {
+            res.status(500).json({
+                success: false,
+                message: "Image size exceed limits",
+            });
+            return
+        }
+
+        else {
+            res.status(400).json({
+                success: false,
+                message: "Error while registeration",
+            });
+            return
+           
+          }
+      }
 });
   

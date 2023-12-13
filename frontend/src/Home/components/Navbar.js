@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import '../CSS/Home.css'
 
-
-
 const Navbar = () => {
 
   const picStyle = {
@@ -36,8 +34,8 @@ const Navbar = () => {
   }
   
   return (
-    <nav className="navbar navbar-expand-lg navbar-extended bg-light-red">
-      <div className="container-fluid py-2">
+    <nav className="navbar navbar-expand-lg navbar-extended bg-dark shadow">
+      <div className="container-fluid ">
         <NavLink className="navbar-brand fw-bolder navbar-brand-black fs-1 me-5" to="/">
           DubEase
         </NavLink>

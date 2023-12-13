@@ -7,6 +7,7 @@ import { clearErrors, forgotPassword } from "../actions/userAction";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import { useNavigate } from "react-router-dom";
+import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 
 
 const ForgotPassword = () => {
@@ -22,7 +23,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
   const forgotPasswordSubmit = (e) => {
-    e.preventDefault();
+  
 
     const myForm = new FormData();
 
@@ -39,6 +40,7 @@ const ForgotPassword = () => {
     if (message) {
       alert.success(message);
       navigate(redirect);
+      
     }
   }, [dispatch,navigate, error, alert, message]);
 
@@ -48,8 +50,9 @@ const ForgotPassword = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Forgot Password" />
-          <div className="forgotPasswordContainer">
+            <MetaData title="Forgot Password" />
+            <Navbar/>
+          <div className="forgotPasswordContainer " style={{zIndex:"-1"}}>
             <div className="forgotPasswordBox">
               <h2 className="forgotPasswordHeading">Forgot Password</h2>
 
