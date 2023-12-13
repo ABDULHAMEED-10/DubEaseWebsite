@@ -81,7 +81,7 @@ const StartVideoRecordUpload = () => {
     if (camera) {
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-        mimeType: "video/mp4",
+        mimeType: "video/webm",
       });
       mediaRecorderRef.current.addEventListener(
         "dataavailable",
@@ -103,14 +103,14 @@ const StartVideoRecordUpload = () => {
   const handleDownload = useCallback(() => {
     if (recordedChunks.length) {
       const blob = new Blob(recordedChunks, {
-        type: "video/mp4",
+        type: "video/webm",
       });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       document.body.appendChild(a);
       a.style = "display: none";
       a.href = url;
-      a.download = "react-webcam-stream-capture.mp4";
+      a.download = "camera video.webm";
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
@@ -197,13 +197,13 @@ const StartVideoRecordUpload = () => {
       setVideoFileName(null);
       setSource(null); 
       setVideoUploaded(false);
-    
     }
     if(audioUploaded){
       setSelectedFile(null);
       setAudioFileName(null);
       setSource(null); 
       setAudioUploaded(false);
+      window.location.reload()
     }
   }
 
@@ -336,7 +336,7 @@ const StartVideoRecordUpload = () => {
                           echoCancellation: true,
                         }}
                         downloadOnSavePress={true}
-                        downloadFileExtension="wav"
+                        downloadFileExtension="webm"
                         />
                         
                       </div>

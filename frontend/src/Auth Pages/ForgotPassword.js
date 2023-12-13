@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, forgotPassword } from "../actions/userAction";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -23,14 +23,11 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
   const forgotPasswordSubmit = (e) => {
-  
-
     const myForm = new FormData();
-
     myForm.set("email", email);
     dispatch(forgotPassword(myForm));
   };
-  const redirect = '/login';
+  
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -39,10 +36,9 @@ const ForgotPassword = () => {
 
     if (message) {
       alert.success(message);
-      navigate(redirect);
-      
+      window.location.reload();
     }
-  }, [dispatch,navigate, error, alert, message]);
+  }, [dispatch, error, alert, message]);
 
   return (
     <Fragment>
