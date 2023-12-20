@@ -5,6 +5,7 @@
 /frontend/.pnp.js
 /frontend/package-lock.json
 /package-lock.json
+/node_modules
 # testing
 /frontend/coverage
 
@@ -24,3 +25,8 @@ yarn-error.log*
 
 .idea/
 .vscode/
+venv/
+output/
+uploads/
+__pycache__/
+Predicted_Emotion_Video/
