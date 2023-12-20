@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../layout/Loader/Loader";
 import { generate_Dub } from "../../actions/dubbingAction";
 import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+import Footer from "../components/Footer";
 
 
 const StartVideoRecordUpload = () => {
@@ -215,7 +216,7 @@ const StartVideoRecordUpload = () => {
         <Fragment>
             <MetaData title="Dub Video" />
             <Navbar/>
-          <div className="container-fluid bg-dark text-white container" style={{zIndex:"-1"}}>
+          <div className="container-fluid bg-dark text-white container1" style={{zIndex:"-1"}}>
             <div className="vh-100 toogleContainer col-md-8">
               <div className="Header">
                 <div className="Audio_Video_toggle">
@@ -394,8 +395,10 @@ const StartVideoRecordUpload = () => {
                 )}
               </div>
             </div>
-          </div>
-        </Fragment>
+            </div>
+          <Footer/>
+            
+          </Fragment>
       )}
     </Fragment>
   );

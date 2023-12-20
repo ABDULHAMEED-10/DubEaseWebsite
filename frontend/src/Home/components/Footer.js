@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="col-md-12 text-center">
             <h3 className="fw-bolder fs-1 text-danger">Connect with Us</h3>
             <p>Stay updated with all the latest news and features</p>
-            <div className="mt-4">
+            <div className="">
               <a href="/" className="me-4">
                 <FontAwesomeIcon icon={faInstagram} style={iconStyle} />
               </a>
