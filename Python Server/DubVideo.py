@@ -1,23 +1,23 @@
 from moviepy.video.io.VideoFileClip import VideoFileClip
-import moviepy.editor as mp
 import speech_recognition as sr
 from googletrans import Translator
 import os
 from moviepy.editor import *
-import os
+
+
 
 
 def extract_audio(video_path, audio_output_path):
-  
+    
     video_clip = VideoFileClip(video_path)
+    
     os.makedirs(os.path.dirname(audio_output_path), exist_ok=True)
     audio_clip = video_clip.audio
     audio_clip.write_audiofile(audio_output_path)
     video_clip.close()
 
-
 def convert_audio_to_text(audio_path):
-    print("Processing Audio")
+    
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_path) as source:
         try:
@@ -40,29 +40,28 @@ def save_text_to_file(text, output_file):
         file.write(text)
 
 def process_video(filename):
+   
     video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
+    audioFileExtension = 'audio.wav'
     pathOfAudioFile = 'output/audio/'
-    audioFileExtension = 'myaudio.wav'
-    words_to_remove = [".mp4", ".webm" , ".mp3" , ".wav"]
-    for word in words_to_remove:
-        filename = filename.replace(word, "")
+    
+    wordsToremove=['.mp4','.webm']
+    for word in wordsToremove:
+        filename = filename.replace(word,'')
     audio_output_path = f'{pathOfAudioFile}{filename}{audioFileExtension}'
+   
     pathOfTextFile = 'output/text/'
     textFileExtension = 'translated_text.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
-
-    if video_path.lower().endswith('.wav'):
-        audio_output_path = video_path  
-
-    else:
-        # Extract audio from the video
+    
+    if video_path.lower().endswith('.mp4') or video_path.lower().endswith('.webm'): 
         extract_audio(video_path, audio_output_path)
-    # Convert audio to text
-    audio_text = convert_audio_to_text(audio_output_path)
+    
+    
 
+    audio_text = convert_audio_to_text(audio_output_path)
     # Translate the text
     translated_text = translate_text(audio_text)
-
     # Save translated text to a file
     save_text_to_file(translated_text, text_output_path)

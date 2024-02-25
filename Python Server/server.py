@@ -3,6 +3,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 from DubVideo import process_video
+from DubAudio import process_audio
 from model import emotionFaceDetectorModel
 
 app = Flask(__name__)
@@ -20,14 +21,16 @@ def Dub():
             filename = secure_filename(f.filename)
 
             try:
-                if filename.lower().endswith('.mp4'):
+                if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
+                    
                     process_video(filename)
                     print("Translation has been done")
-                    emotionFaceDetectorModel(filename)
-                    print("Emotion detection has been done")
+                    # emotionFaceDetectorModel(filename)
+                    # print("Emotion detection has been done")
+                
                 else:
-                    process_video(filename)
-                    print("Translation has been done")
+                    process_audio(filename)
+                   
 
                 return jsonify({"message": "Data sent successfully", "status": "success"}), 200
             except Exception as e:

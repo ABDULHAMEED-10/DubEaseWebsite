@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {BrowserRouter as Router, Routes,Route} from "react-router-dom";
 import "../src/CSS/App.css"
 import Profile from './Auth Pages/Profile';
@@ -23,7 +23,7 @@ const App = () => {
   const {isAuthenticated } = useSelector((state) => state.user);
 
   
-  React.useEffect(() => {
+  useEffect(() => {
     
     store.dispatch(loadUser());
   }, []);

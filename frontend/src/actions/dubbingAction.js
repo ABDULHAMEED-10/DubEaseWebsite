@@ -23,7 +23,8 @@ export const generate_Dub = (source) => async (dispatch) => {
       source,
       config
     );
-      dispatch({ type: GENERATE_DUB_SUCCESS});
+    //changing here cheeck if error occurs
+      dispatch({ type: GENERATE_DUB_SUCCESS,payload: response.data });
     } catch (error) {
       dispatch({ type: GENERATE_DUB_FAILURE, payload: error.response.data.message });
     }

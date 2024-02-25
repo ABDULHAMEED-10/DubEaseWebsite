@@ -6,8 +6,10 @@ const fileUpload = require("express-fileupload");
 //route import
 const user = require("./routes/userRoutes");
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());

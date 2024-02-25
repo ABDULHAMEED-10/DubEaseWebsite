@@ -1,3 +1,8 @@
+:root{
+    --primary-bg-color:#242020;
+    --button-color: #ffc009;
+    --primary-color:#000;
+}
 .container1{
     width: 100vw;
     height: 100vh;
@@ -17,7 +22,7 @@
     display: flex;
     flex-direction: column;
     /* background-color: #9f40ec;  */
-    background-color: #242020;
+    background-color: var(--primary-bg-color);
     border: none;
     
     
@@ -28,6 +33,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    flex-grow: 1;
     align-items: center;
     justify-content: center;
     background-color: #ebebeb;
@@ -70,7 +76,7 @@ audio{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1vmax;
+    margin-top: 1.5vmax;
     margin-bottom: 1vmax;
 }
 
@@ -99,14 +105,14 @@ audio{
 .recordVideo{
     margin-top: 1vmax;
     display: flex;
-    justify-content: space-between;
-    width: 18%;
+    gap: 1vmax;
+    align-items: center;
    
 }
 .videoFileName,
 .audioFileName{
-    color: #000;    
-    padding: 0vmax 1vmax;
+    color: var(--primary-color);    
+    
     
 
 }
@@ -121,7 +127,7 @@ audio{
     border:none;
     box-shadow: 0 2px 5px #bebebe;
     box-sizing: border-box;
-    color: #000;
+    color: var(--primary-color);
     transition: background-color 0.5s ease;
 
 }
@@ -137,8 +143,8 @@ audio{
     padding: 0 1vmax;
     border-radius: 10px;
     transition: background-color 0.5s ease;
-    background-color: #ffc009;
-    color: #000;
+    background-color: var(--button-color);
+    color: var(--primary-color);
     display: flex;
     align-items: center;
 }
@@ -165,12 +171,12 @@ audio{
     
 }
 .startButton > input:hover{
-    background-color: #ffc009;
+    background-color: var(--button-color);
 }
 .onCameraIcons>button{
     position: relative;
     background-color: gray;
-    color: black; 
+    color: var(--primary-color); 
     opacity: 0.5;
     transition: background-color 0.5s ease;
     border-radius: 100%;
@@ -207,7 +213,7 @@ audio{
     display: flex;
     margin-bottom: 1vmax;
     justify-content: center;
-    
+    align-items: center;
 }
 
 .Audio_Video_toggle {
@@ -233,3 +239,108 @@ audio{
     border: none;
     
   }
+
+@media only screen and (max-width: 600px) {
+  .startButton > input{
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    font: 400 3vmax cursive;
+    background-color: var(--button-color);  
+  }
+  
+  .mainUploadRecordVideoAudio{
+    width: 100%;
+    gap: 1vmax;
+  }
+  .mainVideoBox > .videoBox, .mainVideoBox > .AudioBox {
+    width: 100%;
+    padding: 0.5vmax;
+    gap: 0.5vmax;
+   
+  }
+  .mainVideoBox{
+    align-items: start;
+    
+  }
+   
+
+  
+  .orignalVideoBox, .dubbedVideoBox,.orignalAudioBox, .dubbedAudioBox {
+    width: 49%;
+
+  }
+  .browseVideo ,.browseAudio{
+    width: 90%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    
+  }
+
+  .videoFileName,.audioFileName{
+    
+    font: 400 2vmax cursive;
+  
+  }
+  .browseVideo > label, .browseAudio > label {
+    height: 15vw;
+    font: 400 2.5vmax cursive;
+  }
+  .Audio_Video_toggle > p {
+    font: 300 2.3vmax cursive;
+  }
+  .del_icon {
+    width: 50px;
+    height: 42px;   
+    margin: 0 2vmax;
+}
+.orignalAudioBox, .dubbedAudioBox {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+    height: 7.5vh;
+}
+.uploadVideo, .recordAudio  {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  
+}
+.uploadVideo{
+    gap: 3.5vmax;
+}
+.mainCamera{
+    width: 100%;
+   
+}
+.camera{
+    width: 100%;
+    bottom: 0px;
+    
+
+}
+.onCameraIcons{
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 2vmax;
+
+}
+.toogleContainer{
+    width: 100vw;
+    max-height: 100%;
+}
+.start, .cancel, .stop {
+    width: 50px;
+}
+.cancel > i {
+    text-align: center;
+    font-size: 3vmax;
+}
+.start > i, .stop>i {
+    text-align: center;
+    font-size: 2vmax;
+}
+}
