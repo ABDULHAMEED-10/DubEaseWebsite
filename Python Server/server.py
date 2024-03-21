@@ -4,8 +4,8 @@ from werkzeug.utils import secure_filename
 import os
 from DubVideo import process_video
 from DubAudio import process_audio
-from model import emotionFaceDetectorModel
-
+from TTS import text_to_speech
+from VoiceCloning import voice_cloning
 app = Flask(__name__)
 app.config['uploads'] = 'E:/DubEase/Python Server/uploads'
 CORS(app, origins='http://localhost:3000')
@@ -23,10 +23,15 @@ def Dub():
             try:
                 if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                     
-                    process_video(filename)
-                    print("Translation has been done")
-                    # emotionFaceDetectorModel(filename)
-                    # print("Emotion detection has been done")
+                    audioPath,text = process_video(filename)
+                    wordsToremove=['.mp4','.webm','.mp3','.wav']
+                    for word in wordsToremove:
+                        filename_without_extension = filename.replace(word,'')
+                    speachPath = text_to_speech(filename_without_extension, text)
+                    clonedVoicePath="'E:/DubEase/Python Server/output/clone/"+filename_without_extension+"'"
+                    # voice_cloning(speachPath, audioPath, clonedVoicePath)
+                    
+                    
                 
                 else:
                     process_audio(filename)

@@ -15,6 +15,7 @@ def extract_audio(video_path, audio_output_path):
     audio_clip = video_clip.audio
     audio_clip.write_audiofile(audio_output_path)
     video_clip.close()
+    return audio_output_path
 
 def convert_audio_to_text(audio_path):
     
@@ -56,7 +57,7 @@ def process_video(filename):
 
     
     if video_path.lower().endswith('.mp4') or video_path.lower().endswith('.webm'): 
-        extract_audio(video_path, audio_output_path)
+        audio_output_path = extract_audio(video_path, audio_output_path)
     
     
 
@@ -65,3 +66,4 @@ def process_video(filename):
     translated_text = translate_text(audio_text)
     # Save translated text to a file
     save_text_to_file(translated_text, text_output_path)
+    return audio_output_path , translated_text
