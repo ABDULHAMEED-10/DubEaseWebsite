@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 from DubVideo import process_video
 from DubAudio import process_audio
-from TTS import text_to_speech
+from TTSs import text_to_speech
 from VoiceCloning import voice_cloning
 app = Flask(__name__)
 app.config['uploads'] = 'E:/DubEase/Python Server/uploads'
@@ -24,12 +24,13 @@ def Dub():
                 if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                     
                     audioPath,text = process_video(filename)
-                    wordsToremove=['.mp4','.webm','.mp3','.wav']
+                    wordsToremove=['.mp4','.webm','.mp3']
                     for word in wordsToremove:
                         filename_without_extension = filename.replace(word,'')
                     speachPath = text_to_speech(filename_without_extension, text)
-                    clonedVoicePath="'E:/DubEase/Python Server/output/clone/"+filename_without_extension+"'"
-                    # voice_cloning(speachPath, audioPath, clonedVoicePath)
+                    clonedVoicePath = os.path.join('E:/DubEase/Python Server/output/clone/', filename_without_extension + ".wav")
+                    # voice_cloning(text,audioPath,clonedVoicePath) 
+                    voice_cloning(speachPath,audioPath,clonedVoicePath)
                     
                     
                 
