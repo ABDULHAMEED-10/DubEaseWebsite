@@ -31,7 +31,7 @@ def convert_audio_to_text(audio_path):
         
     return audio_text
 
-def translate_text(text, target_language='urdu'):
+def translate_text(text, target_language='en'):
     translator = Translator()
     translation = translator.translate(text, dest=target_language)
     return translation.text
@@ -40,18 +40,18 @@ def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
 
-def process_video(filename):
+def process_Ur_video(filename):
    
-    video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
+    video_path = os.path.join('E:/DubEase/Python Server/uploads/UrVideoIn', filename)
     audioFileExtension = 'audio.wav'
-    pathOfAudioFile = 'output/audio/'
+    pathOfAudioFile = 'output/audio/UrIn/'
     
     wordsToremove=['.mp4','.webm']
     for word in wordsToremove:
         filename = filename.replace(word,'')
     audio_output_path = f'{pathOfAudioFile}{filename}{audioFileExtension}'
    
-    pathOfTextFile = 'output/text/'
+    pathOfTextFile = 'output/text/UrIn/'
     textFileExtension = 'translated_text.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 

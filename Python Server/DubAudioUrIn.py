@@ -16,7 +16,7 @@ def convert_audio_to_text(audio_path):
         
     return audio_text
 
-def translate_text(text, target_language='urdu'):
+def translate_text(text, target_language='en'):
     translator = Translator()
     translation = translator.translate(text, dest=target_language)
     return translation.text
@@ -25,10 +25,10 @@ def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
 
-def process_audio(filename):
-    input_folder = 'E:/DubEase/Python Server/uploads/'
-    output_folder = 'E:/DubEase/Python Server/output/audio/'
-    pathOfTextFile = 'output/text/'
+def process_Ur_audio(filename):
+    input_folder = 'E:/DubEase/Python Server/uploads/UrAudioIn/'
+    output_folder = 'E:/DubEase/Python Server/output/audio/UrIn/'
+    pathOfTextFile = 'output/text/UrIn/'
     textFileExtension = 'translated_text.txt'
     text_output_path = os.path.join(pathOfTextFile, f"{os.path.splitext(filename)[0]}_{textFileExtension}")
 

@@ -162,7 +162,7 @@ audio{
     cursor: pointer;
     height: 6vh;
     border: none;
-    font: 400 1.1vmax cursive;
+    font: 400 1.4vmax cursive;
     padding: 0 1vmax;
     color: black;
     border-radius: 10px;
@@ -239,14 +239,56 @@ audio{
     border: none;
     
   }
+.language-selection-main{
+
+    display: flex;
+    width: 50%;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 1vmax;
+
+}
+.language-selection-main > label{
+    font: 400 1.2vmax cursive;    
+  }
+  .language-selection-main > select,
+  .language-selection-main > select > option
+  {
+    font: 400 1vmax cursive;
+    padding: 0.5vmax;
+    border-radius: 10px;
+
+  }
+
+  
+.startButton{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
 @media only screen and (max-width: 600px) {
   .startButton > input{
-    width: 60%;
+    width: 50%;
+    height: 8vh;
     display: flex;
     justify-content: center;
     font: 400 3vmax cursive;
     background-color: var(--button-color);  
+  }
+  .startButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4vmax;
+  }
+  .language-selection-main > label{
+    font: 400 1.9vmax cursive;    
+  }
+  .language-selection-main > select{
+    font: 400 1.9vmax cursive;
   }
   
   .mainUploadRecordVideoAudio{

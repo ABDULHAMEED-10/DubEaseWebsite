@@ -26,11 +26,14 @@ const StartVideoRecordUpload = () => {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [audioFileName, setAudioFileName] = useState(null);
+
+  const [ln,setLn]=useState("");
   const VideoTab = useRef(null);
   const switcherTab = useRef(null);
   const dispatch = useDispatch();
   const alert = useAlert();
 
+ 
 
   const onFileChangeVideo = (e) => {
     setVideoFileName(e.target.files[0]);
@@ -171,10 +174,12 @@ const StartVideoRecordUpload = () => {
     }
     const myForm = new FormData();
     if (videoUploaded) {
-        myForm.append("source", source);
-        dispatch(generate_Dub(myForm));
+      myForm.append("source", source);
+      myForm.append("language", ln);
+      dispatch(generate_Dub(myForm));
     } else if (audioUploaded) {
       myForm.append("source", source);
+      myForm.append("language", ln);
       dispatch(generate_Dub(myForm));
     } else {
       alert.error('Please upload either audio or video.');
@@ -220,8 +225,8 @@ const StartVideoRecordUpload = () => {
         <Fragment>
             <MetaData title="Dub Video" />
             <Navbar/>
-          <div className="container-fluid bg-dark text-white container1" style={{zIndex:"-1"}}>
-            <div className="vh-100 toogleContainer col-md-8">
+            <div className="container-fluid bg-dark text-white container1" style={{ zIndex: "-1" }}>
+              <div className="vh-1</div>00 toogleContainer col-md-8">
               <div className="Header">
                 <div className="Audio_Video_toggle">
                   <p>Orignal Content</p>
@@ -346,14 +351,24 @@ const StartVideoRecordUpload = () => {
                         
                       </div>
                       
-                  </div>
+                    </div>
+                    
                 </div>
-              </div>
-
-              <div className="startButton">
+                </div>
+                
+                <div className="startButton">
+                <div className="language-selection-main">
+                
+                <label htmlFor="language">Select Language</label>
+                <select id="language" name="language" value={ln} onChange={(e)=>setLn(e.target.value)}>
+                  <option value="english">English To Urdu</option>
+                  <option value="urdu">Urdu To English</option>
+                </select>
+                  </div>
                 <input value="Generate" id="inputButton" form="myForm" type="submit" />
 
-              </div>
+                </div>
+                
             </div>
 
             <div className="mainCamera">
