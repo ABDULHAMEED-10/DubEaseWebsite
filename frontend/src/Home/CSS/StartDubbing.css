@@ -155,6 +155,13 @@ audio{
     font: 400 1.1vmax cursive;
 }
 
+.browseAudio >label:hover,
+.browseVideo >label:hover{
+    background-color: #ff8c00;
+
+}
+
+
 .startButton > input,
 .onCameraIcons > button,
 .onVoiceIcons > button{

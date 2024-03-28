@@ -16,7 +16,7 @@ const LanguageSelection = () => {
   };
 
   return (
-    <div className=" settingright d-flex flex-column justify-content-between">
+    <div className="settingright d-flex flex-column justify-content-between">
       <div>
         <h1 className="settingshd ">Language Selection</h1>
         <div className="inputdiv">
@@ -33,7 +33,7 @@ const LanguageSelection = () => {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        <button type='submit' className="btn btn-warning btn-lg" onClick={applyLanguageChange}>
+        <button type='submit' className="btn btn-warning applyLan btn-lg" onClick={applyLanguageChange}>
           Apply
         </button>
       </div>

@@ -99,7 +99,7 @@ const Navbar = () => {
                     </ul>
                   </div>
                 ) : (
-                  <NavLink to="/login" className="btn btn-warning btn-lg me-3">
+                  <NavLink to="/login" className="btn btn-warning buttonSignLogin btn-lg me-3">
                     <span className="fa fa-sign-in me-1"></span> Login/SignUp
                   </NavLink>
                 )}

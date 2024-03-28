@@ -22,39 +22,40 @@ def translate_text(text, target_language='ur'):
     return translation.text
 
 def save_text_to_file(text, output_file):
+  
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
-
+def convert_audio_to_wav(audio_path, output_path):
+    audio = AudioSegment.from_file(audio_path)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    audio.export(output_path, format="wav")
+    return output_path
 def process_En_audio(filename):
-    input_folder = 'E:/DubEase/Python Server/uploads/'
-    output_folder = 'E:/DubEase/Python Server/output/audio/EngIn/'
+    
+    audio_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
+    audio_output_path = 'output/audio/EngIn/'
+    
     pathOfTextFile = 'output/text/EngIn/'
     textFileExtension = 'translated_text.txt'
-    text_output_path = os.path.join(pathOfTextFile, f"{os.path.splitext(filename)[0]}_{textFileExtension}")
+    text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
+   
     try:
-        audio_path = os.path.join(input_folder, filename)
-        audio_output_path = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}.wav")
         
         if audio_path.lower().endswith('.wav'):
-            # No conversion needed
             audio_output_path = audio_path
         elif audio_path.lower().endswith(('.mp3', '.mpeg', '.ogg','.webm')):
-            # Convert audio to WAV
-            audio = AudioSegment.from_file(audio_path)
-            audio.export(audio_output_path, format="wav")
+            audio_output_path = convert_audio_to_wav(audio_path, audio_output_path)
+
         
-        # Convert audio to text
         audio_text = convert_audio_to_text(audio_output_path)
-        # Translate the text
         translated_text = translate_text(audio_text)
 
-        
-        # Save translated text to a file
         save_text_to_file(translated_text, text_output_path)
+        return audio_output_path , translated_text
+
     except Exception as e:
         print(f"Error occurred during processing: {e}")
-
 
 
 

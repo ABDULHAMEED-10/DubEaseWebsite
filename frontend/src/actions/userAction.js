@@ -98,7 +98,16 @@ export const loadUser = () => async (dispatch) => {
       dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
     }
   };
+//delte user Account
+export const deleteUser = () => async (dispatch) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/v1/delete`,{ withCredentials: true});
   
+      dispatch({ type: LOGOUT_SUCCESS });
+    } catch (error) {
+      dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+    }
+  };
   // Update Profile
   export const updateProfile = (userData) => async (dispatch) => {
     try {

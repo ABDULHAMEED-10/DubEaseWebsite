@@ -60,7 +60,7 @@ def Dub():
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
                         '''this code is written for Test to speach for speech English language'''
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path)
+                        
                     elif(ln == 'english'):
                         audioPath,text = process_En_audio(filename)
                         filename_without_extension, clonedVoicePath = process_filename(filename,ln="EngIn")
@@ -68,7 +68,7 @@ def Dub():
                         speachPath = text_to_speech(filename_without_extension, text) 
                         '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path)
+                        
                    
 
                 return jsonify({"message": "Data sent successfully", "status": "success"}), 200

@@ -228,6 +228,57 @@
 .languageSelectContainer {
   position: relative;
 }
+.DeleteAccount{
+  background-color: #ebecf0;
+  height: 20vh;
+  width: 40vw;
+  
+
+}
+.DeleteAccount > div{
+  background-color: white;
+  width: 24vw;
+  padding: 1rem;
+  gap: 1rem;
+}
+.DeleteAccount > div > p{
+  font-size: 1rem;
+  font-weight: 600;
+}
+.ButtonC > button{
+  background-color: #ffc009 ;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 9vw;
+  color: black;
+
+
+}
+.ButtonC > button:hover{
+  background-color: #ff8c00;
+}
+.ButtonC {
+  border: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.applyLan{
+  background-color: var(--button-color);
+  color: black;
+  font-size: 1rem;
+
+}
+.applyLan:hover{
+  background-color: #ff8c00;
+  color: black;
+
+}
 /* 
 .languageSelect {
   width: 100%;

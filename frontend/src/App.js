@@ -41,7 +41,7 @@ const App = () => {
           </Route>
           <Route path="/settings/*" element={<Settings/>} />
           <Route path="/about" element={<About />} />        
-          
+        
           <Route path="/login" element={<LoginSignUp />} />
           <Route exact path="/password/forgot" element={<Forget />} />
           <Route exact path="/StartVideoDubbing" element={<StartVideoDubbing />} />

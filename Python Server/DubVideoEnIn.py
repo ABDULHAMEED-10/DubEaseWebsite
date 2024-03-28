@@ -37,7 +37,12 @@ def translate_text(text, target_language='ur'):
 def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
-
+def convert_video_to_mp4(video_path, output_path):
+    video_clip = VideoFileClip(video_path)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    video_clip.write_videofile(output_path, codec='libx264')
+    video_clip.close()
+    return output_path
 def process_En_video(filename):
     
     video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
@@ -56,7 +61,8 @@ def process_En_video(filename):
     
     if video_path.lower().endswith('.mp4') or video_path.lower().endswith('.webm'): 
         audio_output_path = extract_audio(video_path, audio_output_path)
-    
+    else:
+        audio_output_path = convert_video_to_mp4(video_path, audio_output_path)
     
 
     audio_text = convert_audio_to_text(audio_output_path)

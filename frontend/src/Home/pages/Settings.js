@@ -11,6 +11,8 @@ import LanguageIcon from "@mui/icons-material/Language";
 import FeedbackIcon from "@mui/icons-material/Feedback";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import HistoryIcon from "@mui/icons-material/History";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteAccount from "../components/DeleteAccount";
 
 
 const Settings = () => {
@@ -21,6 +23,7 @@ const Settings = () => {
     setClickedItem(itemName);
     if (itemName === "account") {
       navigate("/me");
+      
     } else {
       setClickedItem(itemName);
     }
@@ -64,6 +67,12 @@ const Settings = () => {
                 <p> View History</p>
               </>
             )}
+            {clickedItem === "delete" && (
+              <>
+                <p>&gt;</p>
+                <p> Delete Account</p>
+              </>
+            )}
           </div>
         </div>
         <div className="settingcontainer">
@@ -99,12 +108,19 @@ const Settings = () => {
                   <h4 className="settingh4">View History </h4>
                 </div>
               </li>
+              <li onClick={() => handleItemClick("delete")}>
+                <div className={clickedItem === "delete" ? "clicked" : ""}>
+                  <DeleteIcon className="settingsimg" />
+                  <h4 className="settingh4">Delete Account </h4>
+                </div>
+              </li>
             </ul>
           </div>
 
           {clickedItem === "language" && <LanguageSelection />}
 
           {clickedItem === "feedback" && <FeedbackForm />}
+          {clickedItem === "delete" && <DeleteAccount />}
         </div>
       </div>
       <Footer />

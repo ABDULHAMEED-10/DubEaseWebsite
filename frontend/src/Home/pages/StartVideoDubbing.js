@@ -139,8 +139,7 @@ const StartVideoRecordUpload = () => {
   const handleAudioChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-     
-      const validAudioTypes = ['audio/wav','audio/mp3','audio/mpeg','audio/ogg'];
+      const validAudioTypes = ['audio/wav', 'audio/mp3', 'audio/mpeg', 'audio/ogg', 'video/webm'];
       if (validAudioTypes.includes(file.type)) {
         setSource(file);
         setAudioUploaded(true);
