@@ -168,21 +168,26 @@ const StartVideoRecordUpload = () => {
 
   const StartDubbing  = async(e) => {
     e.preventDefault();
-    if (audioUploaded && videoUploaded) {
-      alert.error('Please upload either audio or video, not both.');
-      return;
+    if(ln===""){
+      alert.error("Please Select Language")
     }
-    const myForm = new FormData();
-    if (videoUploaded) {
-      myForm.append("source", source);
-      myForm.append("language", ln);
-      dispatch(generate_Dub(myForm));
-    } else if (audioUploaded) {
-      myForm.append("source", source);
-      myForm.append("language", ln);
-      dispatch(generate_Dub(myForm));
-    } else {
-      alert.error('Please upload either audio or video.');
+    else {
+      if (audioUploaded && videoUploaded) {
+        alert.error('Please upload either audio or video, not both.');
+        return;
+      }
+      const myForm = new FormData();
+      if (videoUploaded) {
+        myForm.append("source", source);
+        myForm.append("language", ln);
+        dispatch(generate_Dub(myForm));
+      } else if (audioUploaded) {
+        myForm.append("source", source);
+        myForm.append("language", ln);
+        dispatch(generate_Dub(myForm));
+      } else {
+        alert.error('Please upload either audio or video.');
+      }
     }
   };
   let { err, loading } = useSelector(
@@ -267,9 +272,9 @@ const StartVideoRecordUpload = () => {
                   </div>
 
                   <div className="dubbedAudioBox"></div>
-                </div>
-
-                <div className="mainUploadRecordVideoAudio" >
+                  </div>
+                 
+                    <div className="mainUploadRecordVideoAudio" >
                   <div className="uploadVideo">
                     {!videoUploaded && <form className="browseVideo" id="myForm" method="POST" encType="multipart/form-data" onSubmit={StartDubbing}>
                       <label htmlFor="inp">Browse Video</label>
@@ -353,14 +358,16 @@ const StartVideoRecordUpload = () => {
                       
                     </div>
                     
-                </div>
+                  </div> 
+
                 </div>
                 
                 <div className="startButton">
                 <div className="language-selection-main">
                 
                 <label htmlFor="language">Select Language</label>
-                <select id="language" name="language" value={ln} onChange={(e)=>setLn(e.target.value)}>
+                    <select id="language" name="language" value={ln} onChange={(e) => setLn(e.target.value)}>
+                  <option value=""></option>
                   <option value="english">English To Urdu</option>
                   <option value="urdu">Urdu To English</option>
                 </select>

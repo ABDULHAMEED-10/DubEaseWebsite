@@ -16,7 +16,7 @@ def convert_audio_to_text(audio_path):
         
     return audio_text
 
-def translate_text(text, target_language='urdu'):
+def translate_text(text, target_language='ur'):
     translator = Translator()
     translation = translator.translate(text, dest=target_language)
     return translation.text
@@ -26,7 +26,7 @@ def save_text_to_file(text, output_file):
         file.write(text)
 
 def process_En_audio(filename):
-    input_folder = 'E:/DubEase/Python Server/uploads/EngAudioIn/'
+    input_folder = 'E:/DubEase/Python Server/uploads/'
     output_folder = 'E:/DubEase/Python Server/output/audio/EngIn/'
     pathOfTextFile = 'output/text/EngIn/'
     textFileExtension = 'translated_text.txt'

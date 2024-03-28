@@ -22,8 +22,8 @@ def convert_audio_to_text(audio_path):
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_path) as source:
         try:
-            audio_data = recognizer.record(source)
-            audio_text = recognizer.recognize_google(audio_data)
+            audio_data = recognizer.record(source, duration=1000)
+            audio_text = recognizer.recognize_google(audio_data,language="ur-PK")
         except sr.UnknownValueError:
             raise Exception("Audio is inaudible. Please choose a different video.")
         except sr.RequestError as e:
@@ -42,7 +42,7 @@ def save_text_to_file(text, output_file):
 
 def process_Ur_video(filename):
    
-    video_path = os.path.join('E:/DubEase/Python Server/uploads/UrVideoIn', filename)
+    video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
     audioFileExtension = 'audio.wav'
     pathOfAudioFile = 'output/audio/UrIn/'
     
@@ -62,6 +62,7 @@ def process_Ur_video(filename):
     
 
     audio_text = convert_audio_to_text(audio_output_path)
+    
     # Translate the text
     translated_text = translate_text(audio_text)
     # Save translated text to a file

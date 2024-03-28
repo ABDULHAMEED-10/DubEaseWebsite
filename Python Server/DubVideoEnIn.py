@@ -6,7 +6,6 @@ from moviepy.editor import *
 
 
 
-
 def extract_audio(video_path, audio_output_path):
     
     video_clip = VideoFileClip(video_path)
@@ -18,7 +17,6 @@ def extract_audio(video_path, audio_output_path):
     return audio_output_path
 
 def convert_audio_to_text(audio_path):
-    
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_path) as source:
         try:
@@ -31,7 +29,7 @@ def convert_audio_to_text(audio_path):
         
     return audio_text
 
-def translate_text(text, target_language='urdu'):
+def translate_text(text, target_language='ur'):
     translator = Translator()
     translation = translator.translate(text, dest=target_language)
     return translation.text
@@ -41,8 +39,8 @@ def save_text_to_file(text, output_file):
         file.write(text)
 
 def process_En_video(filename):
-   
-    video_path = os.path.join('E:/DubEase/Python Server/uploads/EngVideoIn/', filename)
+    
+    video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
     audioFileExtension = 'audio.wav'
     pathOfAudioFile = 'output/audio/EngIn/'
     

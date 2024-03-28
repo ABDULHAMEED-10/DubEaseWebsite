@@ -24,7 +24,6 @@ def text_to_speech(filename,text):
     model = VitsModel.from_pretrained("facebook/mms-tts-urd-script_arabic")
     tokenizer = AutoTokenizer.from_pretrained("facebook/mms-tts-urd-script_arabic")
 
-
     inputs = tokenizer(text, return_tensors="pt")
 
     with torch.no_grad():
@@ -36,4 +35,7 @@ def text_to_speech(filename,text):
     return output_path
 
 def voiceCloningEnglish(text, speaker_wav, output_file):
-    tts.tts_to_file(text=text, speaker_wav=speaker_wav, language="en", file_path=output_file)
+    try:
+        tts.tts_to_file(text=text, speaker_wav=speaker_wav, language="en", file_path=output_file)
+    except Exception as e:
+        print(f"An error occurred: {e}")

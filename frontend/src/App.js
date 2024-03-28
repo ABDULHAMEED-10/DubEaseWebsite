@@ -15,7 +15,7 @@ import StartVideoDubbing from './Home/pages/StartVideoDubbing';
 import Root from './Home/pages/Root';
 import About from './Home/pages/About';
 import Home from './Home/pages/Home';
-
+import Settings from './Home/pages/Settings';
 
 
 const App = () => {
@@ -39,6 +39,7 @@ const App = () => {
             <Route index element={<Home />} />
            
           </Route>
+          <Route path="/settings/*" element={<Settings/>} />
           <Route path="/about" element={<About />} />        
           
           <Route path="/login" element={<LoginSignUp />} />
