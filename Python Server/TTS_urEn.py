@@ -14,6 +14,7 @@ import scipy
 # scipy.io.wavfile.write("techno.wav", rate=model.config.sampling_rate, data=output.float().numpy())
 
 tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2").to("cpu")
+
 def process_filename(filename, ln):
     words_to_remove = ['.mp4', '.webm', '.mp3','.ogg','.mpeg','.wav']
     for word in words_to_remove:

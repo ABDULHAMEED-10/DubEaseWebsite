@@ -1,16 +1,21 @@
-import random
-import yaml
-import numpy as np
-import torch
-from torch import nn
-import torch.nn.functional as F
-from TTS.api import TTS
-import torchaudio
-import librosa
+# import random
+# import yaml
+# from munch import Munch
+# import numpy as np
+# import torch
+# from torch import nn
+# import torch.nn.functional as F
+# import torchaudio
+# import librosa
+# from parallel_wavegan.utils import load_model
+# from Utils.ASR.models import ASRCNN
+# from Utils.JDC.model import JDCNet
+# from models import Generator, MappingNetwork, StyleEncoder
+# import time
+# from IPython.display import display
 
 
-
-speakers = [225,228,229,230,231,233,236,239,240,244,226,227,232,243,254,256,258,259,270,273]
+# speakers = [225,228,229,230,231,233,236,239,240,244,226,227,232,243,254,256,258,259,270,273]
 
 # to_mel = torchaudio.transforms.MelSpectrogram(
 #     n_mels=80, n_fft=2048, win_length=1200, hop_length=300)
@@ -38,15 +43,15 @@ speakers = [225,228,229,230,231,233,236,239,240,244,226,227,232,243,254,256,258,
 #     reference_embeddings = {}
 #     for key, (path, speaker) in speaker_dicts.items():
 #         if path == "":
-#             label = torch.LongTensor([speaker]).to('cuda')
+#             label = torch.LongTensor([speaker]).to('cpu')
 #             latent_dim = starganv2.mapping_network.shared[0].in_features
-#             ref = starganv2.mapping_network(torch.randn(1, latent_dim).to('cuda'), label)
+#             ref = starganv2.mapping_network(torch.randn(1, latent_dim).to('cpu'), label)
 #         else:
 #             wave, sr = librosa.load(path, sr=24000)
 #             audio, index = librosa.effects.trim(wave, top_db=30)
 #             if sr != 24000:
 #                 wave = librosa.resample(wave, sr, 24000)
-#             mel_tensor = preprocess(wave).to('cuda')
+#             mel_tensor = preprocess(wave).to('cpu')
 
 #             with torch.no_grad():
 #                 label = torch.LongTensor([speaker])
@@ -55,42 +60,37 @@ speakers = [225,228,229,230,231,233,236,239,240,244,226,227,232,243,254,256,258,
 
 #     return reference_embeddings
 
-
 # F0_model = JDCNet(num_class=1, seq_len=192)
-# params = torch.load("/Utils/JDC")['net']
+# params = torch.load("E:/DubEase/Python Server/Utils/JDC/bst.t7", map_location=torch.device('cpu'))['net']
 # F0_model.load_state_dict(params)
 # _ = F0_model.eval()
-# F0_model = F0_model.to('cuda')
-# load vocoder
-# from parallel_wavegan.utils import load_model
-# vocoder = load_model("/Vocoder/checkpoint-400000steps.pkl").to('cuda').eval()
+# F0_model = F0_model.to('cpu')
+
+# # load vocoder
+
+# vocoder = load_model("E:/DubEase/Python Server/Vocoder/checkpoint-400000steps.pkl").to('cpu').eval()
 # vocoder.remove_weight_norm()
 # _ = vocoder.eval()
 
-# load starganv2
+# # load starganv2
 
-# model_path = ''
+# model_path = 'E:/DubEase/Python Server/Models/epoch_00150.pth'
 
-# with open('') as f:
+# with open('E:/DubEase/Python Server/Models/config.yml') as f:
 #     starganv2_config = yaml.safe_load(f)
-# starganv2 =""
-# params = torch.load(model_path, map_location='cuda')
+# starganv2 = build_model(model_params=starganv2_config["model_params"])
+# params = torch.load(model_path, map_location='cpu')
 # params = params['model_ema']
 # _ = [starganv2[key].load_state_dict(params[key]) for key in starganv2]
 # _ = [starganv2[key].eval() for key in starganv2]
-# starganv2.style_encoder = starganv2.style_encoder.to('cuda')
-# starganv2.mapping_network = starganv2.mapping_network.to('cuda')
-# starganv2.generator = starganv2.generator.to('cuda')
-
-# -------------------------------------------------
-def voice_cloning(source_wav, target_wav, output_wav):
-    tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=False).to("cpu")
-    tts.voice_conversion_to_file(source_wav=source_wav, target_wav=target_wav, file_path=output_wav)
+# starganv2.style_encoder = starganv2.style_encoder.to('cpu')
+# starganv2.mapping_network = starganv2.mapping_network.to('cpu')
+# starganv2.generator = starganv2.generator.to('cpu')
 
 # # load input wave
 # selected_speakers = [273, 259, 258, 243, 254, 244, 236, 233, 230, 228]
 # k = random.choice(selected_speakers)
-# wav_path = 'source.wav'
+# wav_path = 'E:/DubEase/Python Server/output/textToSpeach/American_Accent_short__1711667089638508.wav'
 # audio, source_sr = librosa.load(wav_path, sr=24000)
 # audio = audio / np.max(np.abs(audio))
 # audio.dtype = np.float32
@@ -99,15 +99,15 @@ def voice_cloning(source_wav, target_wav, output_wav):
 # speaker_dicts = {}
 # for s in selected_speakers:
 #     k = s
-#     speaker_dicts['p' + str(s)] = ('refrence.wav', speakers.index(s))
+#     speaker_dicts['p' + str(s)] = ('E:/DubEase/Python Server/output/audio/EngIn/American_Accent_short__17116681222845783audio.wav', speakers.index(s))
 
 # reference_embeddings = compute_style(speaker_dicts)
 
 # # conversion
-# import time
+
 # start = time.time()
 
-# source = preprocess(audio).to('cuda')
+# source = preprocess(audio).to('cpu')
 # keys = []
 # converted_samples = {}
 # reconstructed_samples = {}
@@ -118,20 +118,20 @@ def voice_cloning(source_wav, target_wav, output_wav):
 #         f0_feat = F0_model.get_feature_GAN(source.unsqueeze(1))
 #         out = starganv2.generator(source.unsqueeze(1), ref, F0=f0_feat)
 
-#         c = out.transpose(-1, -2).squeeze().to('cuda')
-#         # y_out = vocoder.inference(c)
-#         # y_out = y_out.view(-1).cpu()
+#         c = out.transpose(-1, -2).squeeze().to('cpu')
+#         y_out = vocoder.inference(c)
+#         y_out = y_out.view(-1).cpu()
 
 #         if key not in speaker_dicts or speaker_dicts[key][0] == "":
 #             recon = None
 #         else:
 #             wave, sr = librosa.load(speaker_dicts[key][0], sr=24000)
 #             mel = preprocess(wave)
-#             c = mel.transpose(-1, -2).squeeze().to('cuda')
-#             # recon = vocoder.inference(c)
+#             c = mel.transpose(-1, -2).squeeze().to('cpu')
+#             recon = vocoder.inference(c)
 #             recon = recon.view(-1).cpu().numpy()
 
-#     # converted_samples[key] = y_out.numpy()
+#     converted_samples[key] = y_out.numpy()
 #     reconstructed_samples[key] = recon
 
 #     converted_mels[key] = out
@@ -140,79 +140,90 @@ def voice_cloning(source_wav, target_wav, output_wav):
 # end = time.time()
 # print('total processing time: %.3f sec' % (end - start) )
 
-# # import IPython.display as ipd
 # for key, wave in converted_samples.items():
 #     print('Converted: %s' % key)
-#     # display(ipd.Audio(wave, rate=24000))
-#     # print('Reference (vocoder): %s' % key)
-#     # if reconstructed_samples[key] is not None:
-#     #     display(ipd.Audio(reconstructed_samples[key], rate=24000))
+#     display(ipd.Audio(wave, rate=24000))
+#     print('Reference (vocoder): %s' % key)
+#     if reconstructed_samples[key] is not None:
+#         display(ipd.Audio(reconstructed_samples[key], rate=24000))
 
 # print('Original (vocoder):')
 # wave, sr = librosa.load(wav_path, sr=24000)
 # mel = preprocess(wave)
-# c = mel.transpose(-1, -2).squeeze().to('cuda')
-# # with torch.no_grad():
-#     # recon = vocoder.inference(c)
-#     # recon = recon.view(-1).cpu().numpy()
+# c = mel.transpose(-1, -2).squeeze().to('cpu')
+# with torch.no_grad():
+#     recon = vocoder.inference(c)
+#     recon = recon.view(-1).cpu().numpy()
+# display(ipd.Audio(recon, rate=24000))
+# print('Original:')
+# display(ipd.Audio(wav_path, rate=24000))
+
+from TTS.api import TTS
+def voice_cloning(source_wav, target_wav, output_wav):
+    tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=False).to("cpu")
+    tts.voice_conversion_to_file(source_wav=source_wav, target_wav=target_wav, file_path=output_wav)
 
 # # no reference, using mapping network
-# # speaker_dicts = {}
-# # selected_speakers = [273, 259, 258, 243, 254, 244, 236, 233, 230, 228]
-# # for s in selected_speakers:
-# #     k = s
-# #     speaker_dicts['p' + str(s)] = ('', speakers.index(s))
+# speaker_dicts = {}
+# selected_speakers = [273, 259, 258, 243, 254, 244, 236, 233, 230, 228]
+# for s in selected_speakers:
+#     k = s
+#     speaker_dicts['p' + str(s)] = ('', speakers.index(s))
 
-# # reference_embeddings = compute_style(speaker_dicts)
+# reference_embeddings = compute_style(speaker_dicts)
 
+# # conversion
 
+# start = time.time()
 
+# source = preprocess(audio).to('cpu')
+# keys = []
+# converted_samples = {}
+# reconstructed_samples = {}
+# converted_mels = {}
 
+# for key, (ref, _) in reference_embeddings.items():
+#     with torch.no_grad():
+#         f0_feat = F0_model.get_feature_GAN(source.unsqueeze(1))
+#         out = starganv2.generator(source.unsqueeze(1), ref, F0=f0_feat)
 
+#         c = out.transpose(-1, -2).squeeze().to('cpu')
+#         y_out = vocoder.inference(c)
+#         y_out = y_out.view(-1).cpu()
 
+#         if key not in speaker_dicts or speaker_dicts[key][0] == "":
+#             recon = None
+#         else:
+#             wave, sr = librosa.load(speaker_dicts[key][0], sr=24000)
+#             mel = preprocess(wave)
+#             c = mel.transpose(-1, -2).squeeze().to('cpu')
+#             recon = vocoder.inference(c)
+#             recon = recon.view(-1).cpu().numpy()
 
+#     converted_samples[key] = y_out.numpy()
+#     reconstructed_samples[key] = recon
 
+#     converted_mels[key] = out
 
+#     keys.append(key)
+# end = time.time()
+# print('total processing time: %.3f sec' % (end - start) )
 
+# import IPython.display as ipd
+# for key, wave in converted_samples.items():
+#     print('Converted: %s' % key)
+#     display(ipd.Audio(wave, rate=24000))
+#     print('Reference (vocoder): %s' % key)
+#     if reconstructed_samples[key] is not None:
+#         display(ipd.Audio(reconstructed_samples[key], rate=24000))
 
-
-
-
-
-# # def voice_cloning(source, target_wav, output_wav):
-# #     api = TTS("tts_models/urd-script_arabic/fairseq/vits")
-# #     api.tts_with_vc_to_file(
-# #     source,
-# #     speaker_wav=target_wav,
-# #     file_path=output_wav
-# # )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# import torch
-# import TTS.api as TTS
-
-# def voice_cloning(source_wav, target_wav, output_wav):
-#     device = "cuda" if torch.cuda.is_available() else "cpu"
-#     tts = TTS(model_name="voice_conversion_models/multilingual/vctk/freevc24", progress_bar=False).to(device)
-#     tts.voice_conversion_to_file(source_wav=source_wav, target_wav=target_wav, file_path=output_wav)
-
-
-# voice_cloning(source_wav="E:/DubEase/Python Server/source.wav", target_wav="E:/DubEase/Python Server/refrence.wav", output_wav="E:/DubEase/Python Server/output.wav")
+# print('Original (vocoder):')
+# wave, sr = librosa.load(wav_path, sr=24000)
+# mel = preprocess(wave)
+# c = mel.transpose(-1, -2).squeeze().to('cpu')
+# with torch.no_grad():
+#     recon = vocoder.inference(c)
+#     recon = recon.view(-1).cpu().numpy()
+# display(ipd.Audio(recon, rate=24000))
+# print('Original:')
+# display(ipd.Audio(wav_path, rate=24000))

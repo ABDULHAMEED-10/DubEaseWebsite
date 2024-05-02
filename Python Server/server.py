@@ -40,16 +40,16 @@ def Dub():
                     if ln == 'urdu':
                         audioPath,text = process_Ur_video(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
-                        '''this code is written for Test to speach for speech English language'''
+                        # this code is written for Test to speach for speech English languag
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
                         combine_audio_video(video_path, clonedVoicePath, output_path)
                     elif(ln == 'english'):
                         
                         audioPath,text = process_En_video(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="EngIn")
-                        '''this code is written for Text to speech for speech Urdu language'''
+                        # '''this code is written for Text to speech for speech Urdu language'''
                         speachPath = text_to_speech(filename_without_extension, text) 
-                        '''this code is written for Voice Conversion for any language'''
+                        # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
                         combine_audio_video(video_path, clonedVoicePath, output_path)
                     
@@ -58,15 +58,15 @@ def Dub():
                     if ln == 'urdu':
                         audioPath,text = process_Ur_audio(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
-                        '''this code is written for Test to speach for speech English language'''
+                        # this code is written for Test to speach for speech English language
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
                         
                     elif(ln == 'english'):
                         audioPath,text = process_En_audio(filename)
                         filename_without_extension, clonedVoicePath = process_filename(filename,ln="EngIn")
-                        '''this code is written for Text to speech for speech Urdu language'''
+                        # '''this code is written for Text to speech for speech Urdu language'''
                         speachPath = text_to_speech(filename_without_extension, text) 
-                        '''this code is written for Voice Conversion for any language'''
+                        # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
                         
                    
