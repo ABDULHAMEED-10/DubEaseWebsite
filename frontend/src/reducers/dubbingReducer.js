@@ -17,6 +17,7 @@ export const dubbingReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
+                output: action.payload,
             }
         
         case GENERATE_DUB_FAILURE:

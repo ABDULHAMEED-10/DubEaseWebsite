@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useCallback, useRef, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import "../CSS/StartDubbing.css";
 import Webcam from "react-webcam";
 import MetaData from "../../layout/MetaData";
@@ -13,10 +19,8 @@ import { generate_Dub } from "../../actions/dubbingAction";
 import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 import Footer from "../components/Footer";
 
-
-
-
 const StartVideoRecordUpload = () => {
+
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoFileName, setVideoFileName] = useState(null);
 
@@ -27,25 +31,21 @@ const StartVideoRecordUpload = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [audioFileName, setAudioFileName] = useState(null);
 
-  const [ln,setLn]=useState("");
+  const [ln, setLn] = useState("");
   const VideoTab = useRef(null);
   const switcherTab = useRef(null);
   const dispatch = useDispatch();
   const alert = useAlert();
 
- 
-
   const onFileChangeVideo = (e) => {
     setVideoFileName(e.target.files[0]);
   };
 
-
   const handleVideoChange = (event) => {
     const file = event.target.files[0];
 
-
     if (file) {
-      const validVideoTypes = ['video/mp4','video/webm'];
+      const validVideoTypes = ["video/mp4", "video/webm"];
       if (validVideoTypes.includes(file.type)) {
         setVideoFileName(null);
         setSource(file);
@@ -53,17 +53,15 @@ const StartVideoRecordUpload = () => {
         setSelectedVideo(URL.createObjectURL(file));
         onFileChangeVideo(event);
       } else {
-       
         setSelectedVideo(null);
         setVideoUploaded(false);
-        alert.error('Please select a valid video file');
+        alert.error("Please select a valid video file");
       }
     } else {
       setSelectedVideo(null);
-      alert.error('Please select a video file');
+      alert.error("Please select a video file");
     }
   };
-
 
   /////////////////////////
   const webcamRef = useRef(null);
@@ -72,7 +70,6 @@ const StartVideoRecordUpload = () => {
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [camera, setCamera] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
-
 
   const handleDataAvailable = useCallback(
     ({ data }) => {
@@ -139,21 +136,26 @@ const StartVideoRecordUpload = () => {
   const handleAudioChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const validAudioTypes = ['audio/wav', 'audio/mp3', 'audio/mpeg', 'audio/ogg', 'video/webm'];
+      const validAudioTypes = [
+        "audio/wav",
+        "audio/mp3",
+        "audio/mpeg",
+        "audio/ogg",
+        "video/webm",
+      ];
       if (validAudioTypes.includes(file.type)) {
         setSource(file);
         setAudioUploaded(true);
         setSelectedFile(URL.createObjectURL(file));
         onFileChangeAudio(event);
       } else {
-        
         setSelectedFile(null);
         setAudioUploaded(false);
-        alert.error('Please select a valid audio file');
+        alert.error("Please select a valid audio file");
       }
     } else {
       setSelectedFile(null);
-      alert.error('Please select an audio file');
+      alert.error("Please select an audio file");
     }
   };
 
@@ -165,14 +167,13 @@ const StartVideoRecordUpload = () => {
     document.body.appendChild(audio);
   };
 
-  const StartDubbing  = async(e) => {
+  const StartDubbing = async (e) => {
     e.preventDefault();
-    if(ln===""){
-      alert.error("Please Select Language")
-    }
-    else {
+    if (ln === "") {
+      alert.error("Please Select Language");
+    } else {
       if (audioUploaded && videoUploaded) {
-        alert.error('Please upload either audio or video, not both.');
+        alert.error("Please upload either audio or video, not both.");
         return;
       }
       const myForm = new FormData();
@@ -185,16 +186,13 @@ const StartVideoRecordUpload = () => {
         myForm.append("language", ln);
         dispatch(generate_Dub(myForm));
       } else {
-        alert.error('Please upload either audio or video.');
+        alert.error("Please upload either audio or video.");
       }
     }
   };
-  let { err, loading } = useSelector(
-    (state) => state
-  );
+  let { err } = useSelector((state) => state.generateDub);
 
   useEffect(() => {
-
     if (camera) {
       const timer = setTimeout(() => {
         setShowButtons(true);
@@ -209,17 +207,21 @@ const StartVideoRecordUpload = () => {
     if (videoUploaded) {
       setSelectedVideo(null);
       setVideoFileName(null);
-      setSource(null); 
+      setSource(null);
       setVideoUploaded(false);
     }
-    if(audioUploaded){
+    if (audioUploaded) {
       setSelectedFile(null);
       setAudioFileName(null);
-      setSource(null); 
+      setSource(null);
       setAudioUploaded(false);
       // window.location.reload()
     }
-  }
+  };
+  let { loading, output } = useSelector((state) => state.generateDub);
+  
+  
+
 
   return (
     <Fragment>
@@ -227,10 +229,13 @@ const StartVideoRecordUpload = () => {
         <Loader />
       ) : (
         <Fragment>
-            <MetaData title="Dub Video" />
-            <Navbar/>
-            <div className="container-fluid bg-dark text-white container1" style={{ zIndex: "-1" }}>
-              <div className="vh-1</div>00 toogleContainer col-md-8">
+          <MetaData title="Dub Video" />
+          <Navbar />
+          <div
+            className="container-fluid bg-dark text-white container1"
+            style={{ zIndex: "-1" }}
+          >
+            <div className="vh-1</div>00 toogleContainer col-md-8">
               <div className="Header">
                 <div className="Audio_Video_toggle">
                   <p>Orignal Content</p>
@@ -255,78 +260,112 @@ const StartVideoRecordUpload = () => {
                     />
                   </div>
 
-                  <div className="dubbedVideoBox"></div>
+                  <div className="dubbedVideoBox">
+                  <ReactPlayer
+                      controls
+                      playIcon
+                      url={output}
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
                 </div>
 
                 {/* video box end */}
                 {/* audio box start */}
                 <div className="AudioBox ">
                   <div className="orignalAudioBox">
-                      {audioUploaded && <ReactAudioPlayer
-                        src={selectedFile}
-                        controls
-                      />}
-                    
-
+                    {audioUploaded && (
+                      <ReactAudioPlayer src={selectedFile} controls />
+                    )}
                   </div>
 
-                  <div className="dubbedAudioBox"></div>
+                    <div className="dubbedAudioBox">
+                    {/* {audioUploaded && (
+                      <ReactAudioPlayer src={output?.output} controls />
+                    )} */}
                   </div>
-                 
-                    <div className="mainUploadRecordVideoAudio" >
+                </div>
+
+                <div className="mainUploadRecordVideoAudio">
                   <div className="uploadVideo">
-                    {!videoUploaded && <form className="browseVideo" id="myForm" method="POST" encType="multipart/form-data" onSubmit={StartDubbing}>
-                      <label htmlFor="inp">Browse Video</label>
-                      <label style={{ visibility: "hidden" }} htmlFor="inputButton"></label>
+                    {!videoUploaded && (
+                      <form
+                        className="browseVideo"
+                        id="myForm"
+                        method="POST"
+                        encType="multipart/form-data"
+                        onSubmit={StartDubbing}
+                      >
+                        <label htmlFor="inp">Browse Video</label>
+                        <label
+                          style={{ visibility: "hidden" }}
+                          htmlFor="inputButton"
+                        ></label>
 
-                      {videoFileName?.name && (
-                        <p className="videoFileName">
-                          {videoFileName.name.split(" ").slice(0, 3).join(" ")}
-                          {/* {videoFileName.name.split(" ").length > 2 && "..."} */}
-                        </p>
+                        {videoFileName?.name && (
+                          <p className="videoFileName">
+                            {videoFileName.name
+                              .split(" ")
+                              .slice(0, 3)
+                              .join(" ")}
+                            {/* {videoFileName.name.split(" ").length > 2 && "..."} */}
+                          </p>
+                        )}
+                        <input
+                          type="file"
+                          id="inp"
+                          name="source"
+                          accept="video/mp4, video/webm"
+                          style={{ display: "none" }}
+                          onChange={handleVideoChange}
+                        />
+                      </form>
+                    )}
 
-                      )}
-                      <input
-                        type="file"
-                        id="inp"
-                        name="source"
-                        accept="video/mp4, video/webm"
-                        style={{ display: "none" }}
-                        onChange={handleVideoChange}
-                      />
+                    {!audioUploaded && (
+                      <form
+                        className="browseAudio"
+                        id="myForm"
+                        method="POST"
+                        encType="multipart/form-data"
+                        onSubmit={StartDubbing}
+                      >
+                        <label htmlFor="input-file">Browse Audio</label>
+                        <label
+                          style={{ visibility: "hidden" }}
+                          htmlFor="inputButton"
+                        ></label>
 
-                    </form>}
-                    
-
-
-                    {!audioUploaded && <form className="browseAudio" id="myForm" method="POST" encType="multipart/form-data" onSubmit={StartDubbing}>
-                      <label htmlFor="input-file">Browse Audio</label>
-                      <label style={{ visibility: "hidden" }} htmlFor="inputButton"></label>
-
-                      {audioFileName?.name && (
-                        <p className="audioFileName">
-                          {audioFileName.name.split(" ").slice(0, 3).join(" ")}
-                          {/* {audioFileName.name.split(" ").length > 3 && "..."} */}
-                        </p>
-                      )}
-                      <input
-                        type="file"
-                        id="input-file"
-                        name="source"
-                        accept="audio/wav, audio/mp3, audio/mpeg, audio/ogg, audio/webm"
-                        style={{ display: "none" }}
-                        onChange={handleAudioChange}
-                      />
-                      </form>}
-                      {source && <Tooltip title="remove file">
-                    <button className="del_icon" onClick={remove}>
-                    <i className="fas fa-trash"></i>
+                        {audioFileName?.name && (
+                          <p className="audioFileName">
+                            {audioFileName.name
+                              .split(" ")
+                              .slice(0, 3)
+                              .join(" ")}
+                            {/* {audioFileName.name.split(" ").length > 3 && "..."} */}
+                          </p>
+                        )}
+                        <input
+                          type="file"
+                          id="input-file"
+                          name="source"
+                          accept="audio/wav, audio/mp3, audio/mpeg, audio/ogg, audio/webm"
+                          style={{ display: "none" }}
+                          onChange={handleAudioChange}
+                        />
+                      </form>
+                    )}
+                    {source && (
+                      <Tooltip title="remove file">
+                        <button className="del_icon" onClick={remove}>
+                          <i className="fas fa-trash"></i>
                         </button>
-                      </Tooltip>}
+                      </Tooltip>
+                    )}
                   </div>
 
                   <div className="recordAudio">
-
                     <div className="recordVideo ">
                       <Tooltip title="Start Recording">
                         <button onClick={handleCameraClick}>
@@ -352,29 +391,32 @@ const StartVideoRecordUpload = () => {
                         downloadOnSavePress={true}
                         downloadFileExtension="wav"
                       />
-                        
-                      </div>
-                      
                     </div>
-                    
-                  </div> 
-
-                </div>
-                
-                <div className="startButton">
-                <div className="language-selection-main">
-                
-                <label htmlFor="language">Select Language</label>
-                    <select id="language" name="language" value={ln} onChange={(e) => setLn(e.target.value)}>
-                  <option value=""></option>
-                  <option value="english">English To Urdu</option>
-                  <option value="urdu">Urdu To English</option>
-                </select>
                   </div>
-                <input value="Generate" id="inputButton" form="myForm" type="submit" />
-
                 </div>
-                
+              </div>
+
+              <div className="startButton">
+                <div className="language-selection-main">
+                  <label htmlFor="language">Select Language</label>
+                  <select
+                    id="language"
+                    name="language"
+                    value={ln}
+                    onChange={(e) => setLn(e.target.value)}
+                  >
+                    <option value=""></option>
+                    <option value="english">English To Urdu</option>
+                    <option value="urdu">Urdu To English</option>
+                  </select>
+                </div>
+                <input
+                  value="Generate"
+                  id="inputButton"
+                  form="myForm"
+                  type="submit"
+                />
+              </div>
             </div>
 
             <div className="mainCamera">
@@ -405,12 +447,18 @@ const StartVideoRecordUpload = () => {
                     {camera && showButtons && (
                       <>
                         <Tooltip title="Start">
-                          <button className="start" onClick={handleStartCaptureClick}>
+                          <button
+                            className="start"
+                            onClick={handleStartCaptureClick}
+                          >
                             <i className="fas fa-circle"></i>
                           </button>
                         </Tooltip>
                         <Tooltip title="Cancel">
-                          <button className="cancel" onClick={handleCameraClick}>
+                          <button
+                            className="cancel"
+                            onClick={handleCameraClick}
+                          >
                             <i className="fas fa-times"></i>
                           </button>
                         </Tooltip>
@@ -420,10 +468,9 @@ const StartVideoRecordUpload = () => {
                 )}
               </div>
             </div>
-            </div>
-          <Footer/>
-            
-          </Fragment>
+          </div>
+          <Footer />
+        </Fragment>
       )}
     </Fragment>
   );

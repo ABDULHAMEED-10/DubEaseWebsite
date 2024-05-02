@@ -12,9 +12,14 @@ from TTS_urEn import voiceCloningEnglish
 from TTS_urEn import process_filename
 from Synchronization import combine_audio_video
 import time
+from flask import send_file
 app = Flask(__name__)
 app.config['uploads'] = 'E:/DubEase/Python Server/uploads'
 app.config['output'] = 'E:/DubEase/Python Server/dubOutput'
+# app.config['UrInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/URIn'
+# app.config['EngInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/EngIn'
+
+
 CORS(app, origins='http://localhost:3000')
 
 @app.route('/flask/generateDub', methods=['POST','GET'])
@@ -22,6 +27,7 @@ CORS(app, origins='http://localhost:3000')
 
 def Dub():
     if request.method == 'POST':
+        
         if 'source' not in request.files:
             return jsonify({"message": "Data sent unsuccessfully", "status": "error"}), 400
         else:
@@ -52,7 +58,10 @@ def Dub():
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
                         combine_audio_video(video_path, clonedVoicePath, output_path)
-                    
+                        
+                    video_files = os.listdir(app.config['output'])
+                    video_dubbed = [filename for filename in video_files if filename.startswith(filename_without_extension)]
+                    return send_file(os.path.join(app.config['output'], video_dubbed[0]), mimetype='video/mp4')
                 
                 else:
                     if ln == 'urdu':
@@ -69,11 +78,19 @@ def Dub():
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
                         
-                   
-
-                return jsonify({"message": "Data sent successfully", "status": "success"}), 200
+                  
+                # else:
+                #     if ln == 'urdu':
+                #         audio_files = os.listdir(app.config['UrInaudioOutput'])
+                #         audio_dubbed = [filename for filename in audio_files if filename.startswith(filename_without_extension)]
+                #         return send_file(os.path.join(app.config['UrInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
+                #     else:
+                #         audio_files = os.listdir(app.config['EngInaudioOutput'])
+                #         audio_dubbed = [filename for filename in audio_files if filename.startswith(filename_without_extension)]
+                #         return send_file(os.path.join(app.config['EngInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
             except Exception as e:
                 return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
+                
 
 if __name__ == '__main__':
     app.run(debug=True)
