@@ -15,9 +15,10 @@ import ReactAudioPlayer from "react-audio-player";
 import { Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../layout/Loader/Loader";
-import { generate_Dub } from "../../actions/dubbingAction";
+import { generate_Dub,clearState } from "../../actions/dubbingAction";
 import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 import Footer from "../components/Footer";
+
 
 const StartVideoRecordUpload = () => {
 
@@ -190,7 +191,8 @@ const StartVideoRecordUpload = () => {
       }
     }
   };
-  let { err } = useSelector((state) => state.generateDub);
+  
+  let { loading, output, err } = useSelector((state) => state.generateDub);
 
   useEffect(() => {
     if (camera) {
@@ -204,23 +206,18 @@ const StartVideoRecordUpload = () => {
   }, [camera, err]);
 
   const remove = () => {
-    if (videoUploaded) {
-      setSelectedVideo(null);
-      setVideoFileName(null);
-      setSource(null);
-      setVideoUploaded(false);
-    }
-    if (audioUploaded) {
-      setSelectedFile(null);
-      setAudioFileName(null);
-      setSource(null);
-      setAudioUploaded(false);
-      // window.location.reload()
-    }
+    setSelectedVideo(null);
+    setVideoFileName(null);
+    setVideoUploaded(false);
+    setSelectedFile(null);
+    setAudioFileName(null);
+    setSource(null);
+    setAudioUploaded(false);
+    dispatch(clearState());
   };
-  let { loading, output } = useSelector((state) => state.generateDub);
-  
-  // Audio part remaining
+
+
+ 
 
 
   return (
@@ -261,13 +258,13 @@ const StartVideoRecordUpload = () => {
                   </div>
 
                   <div className="dubbedVideoBox">
-                  <ReactPlayer
-                      controls
-                      playIcon
-                      url={output}
-                      width="100%"
-                      height="100%"
-                    />
+                      {(videoUploaded &&  output!==null && !audioUploaded) && (<ReactPlayer
+                        controls
+                        playIcon
+                        url={output}
+                        width="100%"
+                        height="100%"
+                      />)}
                   </div>
                 </div>
 
@@ -281,9 +278,9 @@ const StartVideoRecordUpload = () => {
                   </div>
 
                     <div className="dubbedAudioBox">
-                    {/* {audioUploaded && (
-                      <ReactAudioPlayer src={output?.output} controls />
-                    )} */}
+                    {(audioUploaded && output!==null && !videoUploaded) && (
+                      <ReactAudioPlayer src={output} controls />
+                    )}  
                   </div>
                 </div>
 

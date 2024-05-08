@@ -16,8 +16,8 @@ from flask import send_file
 app = Flask(__name__)
 app.config['uploads'] = 'E:/DubEase/Python Server/uploads'
 app.config['output'] = 'E:/DubEase/Python Server/dubOutput'
-# app.config['UrInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/URIn'
-# app.config['EngInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/EngIn'
+app.config['UrInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/URIn'
+app.config['EngInaudioOutput'] = 'E:/DubEase/Python Server/output/clone/EngIn'
 
 
 CORS(app, origins='http://localhost:3000')
@@ -44,9 +44,10 @@ def Dub():
             try:
                 if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                     if ln == 'urdu':
+                        
                         audioPath,text = process_Ur_video(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
-                        # this code is written for Test to speach for speech English languag
+                        # # this code is written for Test to speach for speech English languag
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
                         combine_audio_video(video_path, clonedVoicePath, output_path)
                     elif(ln == 'english'):
@@ -59,17 +60,25 @@ def Dub():
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
                         combine_audio_video(video_path, clonedVoicePath, output_path)
                         
-                    video_files = os.listdir(app.config['output'])
-                    video_dubbed = [filename for filename in video_files if filename.startswith(filename_without_extension)]
-                    return send_file(os.path.join(app.config['output'], video_dubbed[0]), mimetype='video/mp4')
-                
+                    try:
+                        video_files = os.listdir(app.config['output'])
+                        video_dubbed = [filename for filename in video_files if filename.startswith(filename_without_extension)]
+                        return send_file(os.path.join(app.config['output'], video_dubbed[0]), mimetype='video/mp4')
+                    except Exception as e:
+                        return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
                 else:
                     if ln == 'urdu':
                         audioPath,text = process_Ur_audio(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
                         # this code is written for Test to speach for speech English language
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
-                        
+                    
+                        try:
+                            audio_files = os.listdir(app.config['UrInaudioOutput'])
+                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename)]
+                            return send_file(os.path.join(app.config['UrInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
+                        except Exception as e:
+                            return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
                     elif(ln == 'english'):
                         audioPath,text = process_En_audio(filename)
                         filename_without_extension, clonedVoicePath = process_filename(filename,ln="EngIn")
@@ -77,17 +86,15 @@ def Dub():
                         speachPath = text_to_speech(filename_without_extension, text) 
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
-                        
+
+                        try:
+                            audio_files = os.listdir(app.config['EngInaudioOutput'])
+                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename)]
+                            return send_file(os.path.join(app.config['EngInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
+                        except Exception as e:
+                            return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
                   
-                # else:
-                #     if ln == 'urdu':
-                #         audio_files = os.listdir(app.config['UrInaudioOutput'])
-                #         audio_dubbed = [filename for filename in audio_files if filename.startswith(filename_without_extension)]
-                #         return send_file(os.path.join(app.config['UrInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
-                #     else:
-                #         audio_files = os.listdir(app.config['EngInaudioOutput'])
-                #         audio_dubbed = [filename for filename in audio_files if filename.startswith(filename_without_extension)]
-                #         return send_file(os.path.join(app.config['EngInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
+             
             except Exception as e:
                 return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
                 

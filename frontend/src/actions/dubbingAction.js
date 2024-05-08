@@ -1,8 +1,8 @@
 import {
     GENERATE_DUB_FAILURE,
     GENERATE_DUB_REQUEST,
-    GENERATE_DUB_SUCCESS,
-
+  GENERATE_DUB_SUCCESS,
+  ClEAR_STATES,
     CLEAR_ERRORS,
 } from "../constants/dubbingConstants";
 
@@ -25,24 +25,25 @@ export const generate_Dub = (source) => async (dispatch) => {
       config,
       
     );
-    const videoBlob = new Blob([response.data], { type: 'video/mp4' });
-    const url = URL.createObjectURL(videoBlob);
-    
-      dispatch({ type: GENERATE_DUB_SUCCESS,payload: url });
+    if (response.data.type === "video/mp4") {
+      const videoBlob =  new Blob([response.data], { type: "video/mp4" });
+      const url = URL.createObjectURL(videoBlob);
+      
+      dispatch({ type: GENERATE_DUB_SUCCESS, payload: url });
+    } else if (response.data.type === "audio/mpeg") {
+      const audioBlob = new Blob([response.data], { type: "audio/mpeg" });
+      const url = URL.createObjectURL(audioBlob);
+      dispatch({ type: GENERATE_DUB_SUCCESS, payload: url });
+    }
     } catch (error) {
       dispatch({ type: GENERATE_DUB_FAILURE, payload: error.response.data.message });
     }
 };
-// if (response.data.type === 'video') {
-//   const videoBlob = new Blob([response.data], { type: 'video/mp4' });
-//   const url = URL.createObjectURL(videoBlob);
-//   dispatch({ type: GENERATE_DUB_SUCCESS, payload: url });
-// } else if (response.data.type === 'audio') {
-//   const audioBlob = new Blob([response.data], { type: 'audio/mpeg' });
-//   const audioUrl = URL.createObjectURL(audioBlob);
-//   dispatch({ type: GENERATE_DUB_SUCCESS, payload: audioUrl });
-// }
-  
+
+// Clearing State
+export const clearState = () => async (dispatch) => {
+  dispatch({ type: ClEAR_STATES });
+};
 // Clearing Errors
 export const clearErrors = () => async (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
