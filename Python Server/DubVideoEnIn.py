@@ -60,7 +60,7 @@ def process_En_video(filename):
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
     
-    if video_path.lower().endswith('.mp4') or video_path.lower().endswith('.webm'): 
+    if video_path.lower().endswith('.mp4'): 
         audio_output_path = extract_audio(video_path, audio_output_path)
     else:
         audio_output_path = convert_video_to_mp4(video_path, audio_output_path)

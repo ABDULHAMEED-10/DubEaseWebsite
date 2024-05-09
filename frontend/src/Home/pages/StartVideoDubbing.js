@@ -15,7 +15,7 @@ import ReactAudioPlayer from "react-audio-player";
 import { Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../layout/Loader/Loader";
-import { generate_Dub,clearState } from "../../actions/dubbingAction";
+import { generate_Dub,clearState, clearErrors } from "../../actions/dubbingAction";
 import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
 import Footer from "../components/Footer";
 
@@ -119,15 +119,17 @@ const StartVideoRecordUpload = () => {
       a.click();
       window.URL.revokeObjectURL(url);
       setRecordedChunks([]);
+
     }
   }, [recordedChunks]);
 
   const handleCameraClick = () => {
     setCamera((prevCameraState) => !prevCameraState);
+    recordedChunks.length = 0;
   };
   const videoConstraints = {
-    width: 400,
-    height: 500,
+    width: 640,
+    height: 480,
     facingMode: "user",
     latencyMode: "real-time",
     
@@ -197,18 +199,23 @@ const StartVideoRecordUpload = () => {
     }
   };
   
-  let { loading, output, err } = useSelector((state) => state.generateDub);
+  let { loading, output, error } = useSelector((state) => state.generateDub);
 
   useEffect(() => {
     if (camera) {
       const timer = setTimeout(() => {
         setShowButtons(true);
-      }, 3000);
+      }, 2000);
       return () => clearTimeout(timer);
     } else {
       setShowButtons(false);
     }
-  }, [camera, err]);
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    
+  }, [camera],error);
 
   const remove = () => {
     setSelectedVideo(null);
@@ -230,9 +237,10 @@ const StartVideoRecordUpload = () => {
       {loading ? (
         <Loader />
       ) : (
-        <Fragment>
+          <Fragment>
+            
           <MetaData title="Dub Video" />
-          <Navbar />
+            <Navbar />
           <div
             className="container-fluid bg-dark text-white container1"
             style={{ zIndex: "-1" }}
@@ -389,6 +397,7 @@ const StartVideoRecordUpload = () => {
                         audioTrackConstraints={{
                           noiseSuppression: true,
                           echoCancellation: true,
+
                         }}
                         downloadOnSavePress={true}
                         downloadFileExtension="wav"
@@ -425,10 +434,11 @@ const StartVideoRecordUpload = () => {
               <div className="camera">
                 {camera ? (
                   <Webcam
-                    height={1080}
-                    width={1920}
+                    height={100 + "%"}
+                    width={100 + "%"}
                     audio={true}
-                    mirrored={true}
+                      mirrored={true}
+                      muted={true}
                       ref={webcamRef}
                       audioConstraints={{
                         suppressLocalAudioPlayback: true,

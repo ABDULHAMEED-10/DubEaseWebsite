@@ -59,7 +59,7 @@ def process_Ur_video(filename):
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
     
-    if video_path.lower().endswith('.mp4') or video_path.lower().endswith('.webm'): 
+    if video_path.lower().endswith('.mp4'): 
         audio_output_path = extract_audio(video_path, audio_output_path)
     
     else:

@@ -163,7 +163,6 @@ audio{
 
 
 .startButton > input,
-.onCameraIcons > button,
 .onVoiceIcons > button{
     text-align: center;
     cursor: pointer;
@@ -177,6 +176,7 @@ audio{
     
     
 }
+
 .startButton > input:hover{
     background-color: var(--button-color);
 }
@@ -184,10 +184,17 @@ audio{
     position: relative;
     background-color: gray;
     color: var(--primary-color); 
-    opacity: 0.5;
+    opacity: 0.7;
     transition: background-color 0.5s ease;
-    border-radius: 100%;
+    border-radius: 100px;
     margin: 1vmax;
+    text-align: center;
+    cursor: pointer;
+    height: 3vw;
+    width: 3vw;
+    border: none;
+    font: 400 1vmax cursive;
+    transition: background-color 0.5s ease;
 }
 .onCameraIcons>button:hover,
 .onVoiceIcons>button:hover{
@@ -209,20 +216,27 @@ audio{
     position: absolute;
     display:flex;
     flex-direction:column-reverse;
-    bottom: 7vmax;
+
     
     
 }
-.onCameraIcons,
+
 .onVoiceIcons{
     position: relative;
-    width: 26vmax;
+    width: 80vh;
     display: flex;
     margin-bottom: 1vmax;
     justify-content: center;
     align-items: center;
 }
-
+.onCameraIcons{
+    position: relative;
+    width: 80vh;
+    display: flex;
+    margin-bottom: 1vmax;
+    justify-content: center;
+    align-items: center;
+}
 .Audio_Video_toggle {
     display: flex;
     height: 3vmax;
@@ -282,7 +296,7 @@ audio{
     display: flex;
     justify-content: center;
     font: 400 3vmax cursive;
-    background-color: var(--button-color);  
+     
   }
   .startButton{
     display: flex;
@@ -291,13 +305,19 @@ audio{
     flex-direction: column;
     gap: 4vmax;
   }
+  .startButton > input:hover{
+    background-color: var(--button-color);
+}
   .language-selection-main > label{
-    font: 400 1.9vmax cursive;    
+    font: 400 2.4vmax cursive;    
   }
   .language-selection-main > select{
-    font: 400 1.9vmax cursive;
+    font: 400 2.4vmax cursive;
   }
-  
+  .language-selection-main > select > option{
+    font: 400 1.9vmax cursive;
+
+  }
   .mainUploadRecordVideoAudio{
     width: 100%;
     gap: 1vmax;
@@ -365,15 +385,10 @@ audio{
     width: 100%;
    
 }
-.camera{
-    width: 100%;
-    bottom: 0px;
-    
 
-}
 .onCameraIcons{
     width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     margin-bottom: 2vmax;
 
 }
@@ -381,15 +396,12 @@ audio{
     width: 100vw;
     max-height: 100%;
 }
-.start, .cancel, .stop {
-    width: 50px;
+.onCameraIcons>button{
+    opacity: 1;
+    height: 8vw;
+    width: 8vw;
+    font: 400 2vmax cursive;
 }
-.cancel > i {
-    text-align: center;
-    font-size: 3vmax;
-}
-.start > i, .stop>i {
-    text-align: center;
-    font-size: 2vmax;
-}
+
+
 }

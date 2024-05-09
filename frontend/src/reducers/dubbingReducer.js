@@ -30,6 +30,7 @@ export const dubbingReducer = (state = {}, action) => {
         case ClEAR_STATES:
             return {
                 ...state,
+                loading: false,
                 output: null,
             };
         case CLEAR_ERRORS:
