@@ -2,6 +2,7 @@ import speech_recognition as sr
 from googletrans import Translator
 from pydub import AudioSegment
 import os
+import subprocess
 
 def convert_audio_to_text(audio_path):
     recognizer = sr.Recognizer()
@@ -25,10 +26,12 @@ def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
 def convert_audio_to_wav(audio_path, output_path):
+    
     audio = AudioSegment.from_file(audio_path)
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    output_path = audio_path.replace('.webm', '.wav')
     audio.export(output_path, format="wav")
     return output_path
+    
 def process_Ur_audio(filename):
 
     audio_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)

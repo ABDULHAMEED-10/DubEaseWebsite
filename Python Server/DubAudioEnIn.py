@@ -27,7 +27,7 @@ def save_text_to_file(text, output_file):
         file.write(text)
 def convert_audio_to_wav(audio_path, output_path):
     audio = AudioSegment.from_file(audio_path)
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    output_path = audio_path.replace('.webm', '.wav')
     audio.export(output_path, format="wav")
     return output_path
 def process_En_audio(filename):

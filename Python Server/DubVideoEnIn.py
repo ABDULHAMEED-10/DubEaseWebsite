@@ -38,9 +38,10 @@ def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
 def convert_video_to_mp4(video_path, output_path):
+    
     video_clip = VideoFileClip(video_path)
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    video_clip.write_videofile(output_path, codec='libx264')
+    output_path = video_clip.replace('.webm', '.mp4')
+    video_clip.write_videofile(output_path, format='mp4')
     video_clip.close()
     return output_path
 def process_En_video(filename):

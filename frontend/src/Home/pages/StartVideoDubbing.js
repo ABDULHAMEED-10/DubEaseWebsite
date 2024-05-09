@@ -86,6 +86,7 @@ const StartVideoRecordUpload = () => {
       setCapturing(true);
       mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
         mimeType: "video/webm",
+
       });
       mediaRecorderRef.current.addEventListener(
         "dataavailable",
@@ -128,6 +129,10 @@ const StartVideoRecordUpload = () => {
     width: 400,
     height: 500,
     facingMode: "user",
+    latencyMode: "real-time",
+    
+    
+
   };
   /////////////////////////////////////////////
 
@@ -424,7 +429,13 @@ const StartVideoRecordUpload = () => {
                     width={1920}
                     audio={true}
                     mirrored={true}
-                    ref={webcamRef}
+                      ref={webcamRef}
+                      audioConstraints={{
+                        suppressLocalAudioPlayback: true,
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                       
+                      }}
                     videoConstraints={videoConstraints}
                   />
                 ) : (

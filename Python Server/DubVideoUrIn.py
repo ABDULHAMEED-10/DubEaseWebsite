@@ -7,15 +7,13 @@ from moviepy.editor import *
 
 
 
-def extract_audio(video_path, audio_output_path):
+def extract_audio(video_path, output_path):
     
     video_clip = VideoFileClip(video_path)
-    
-    os.makedirs(os.path.dirname(audio_output_path), exist_ok=True)
-    audio_clip = video_clip.audio
-    audio_clip.write_audiofile(audio_output_path)
+    output_path = video_clip.replace('.webm', '.mp4')
+    video_clip.write_videofile(output_path, format='mp4')
     video_clip.close()
-    return audio_output_path
+    return output_path
 
 def convert_audio_to_text(audio_path):
     
