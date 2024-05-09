@@ -7,13 +7,13 @@ from moviepy.editor import *
 
 
 
-def extract_audio(video_path, output_path):
-    
+def extract_audio(video_path, audio_output_path):
     video_clip = VideoFileClip(video_path)
-    output_path = video_clip.replace('.webm', '.mp4')
-    video_clip.write_videofile(output_path, format='mp4')
+    os.makedirs(os.path.dirname(audio_output_path), exist_ok=True)
+    audio_clip = video_clip.audio
+    audio_clip.write_audiofile(audio_output_path)
     video_clip.close()
-    return output_path
+    return audio_output_path
 
 def convert_audio_to_text(audio_path):
     
@@ -39,8 +39,8 @@ def save_text_to_file(text, output_file):
         file.write(text)
 def convert_video_to_mp4(video_path, output_path):
     video_clip = VideoFileClip(video_path)
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    video_clip.write_videofile(output_path, codec='libx264')
+    output_path = video_clip.replace('.webm', '.mp4')
+    video_clip.write_videofile(output_path, format='mp4')
     video_clip.close()
     return output_path
 def process_Ur_video(filename):
@@ -59,10 +59,10 @@ def process_Ur_video(filename):
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
     
-    if video_path.lower().endswith('.mp4'): 
+    if video_path.lower().endswith(('.mp4')): 
         audio_output_path = extract_audio(video_path, audio_output_path)
     
-    else:
+    elif video_path.lower().endswith(('.webm')):
         audio_output_path = convert_video_to_mp4(video_path, audio_output_path)
 
 

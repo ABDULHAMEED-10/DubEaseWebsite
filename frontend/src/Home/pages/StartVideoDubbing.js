@@ -215,7 +215,7 @@ const StartVideoRecordUpload = () => {
       dispatch(clearErrors());
     }
     
-  }, [camera],error);
+  }, [camera,error,dispatch,alert]);
 
   const remove = () => {
     setSelectedVideo(null);

@@ -40,7 +40,7 @@ def Dub():
             filename = filename_with_timestamp
             ln = request.form['language']
             video_path = os.path.join(app.config['uploads'], filename)
-            output_path = os.path.join(app.config['output'], f"{filename_without_extension}_dubbed{file_extension}")   
+            output_path = os.path.join(app.config['output'], filename)   
             try:
                 if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                     if ln == 'urdu':
@@ -49,7 +49,7 @@ def Dub():
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
                         # # this code is written for Test to speach for speech English languag
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path)
+                        combine_audio_video(video_path, clonedVoicePath, output_path,ln="UrIn")
                     elif(ln == 'english'):
                         
                         audioPath,text = process_En_video(filename)
@@ -58,7 +58,7 @@ def Dub():
                         speachPath = text_to_speech(filename_without_extension, text) 
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path)
+                        combine_audio_video(video_path, clonedVoicePath, output_path,ln="EngIn")
                         
                     try:
                         video_files = os.listdir(app.config['output'])
