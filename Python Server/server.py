@@ -45,20 +45,30 @@ def Dub():
                 if filename.lower().endswith('.mp4') or (filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                     if ln == 'urdu':
                         
-                        audioPath,text = process_Ur_video(filename)
+                        audioPath,text,converted_video = process_Ur_video(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
-                        # # this code is written for Test to speach for speech English languag
+                        print(filename_without_extension)
+                        # this code is written for Test to speach for speech English languag
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path,ln="UrIn")
+            
+                        if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
+                            output_path = os.path.join(app.config['output'], filename.replace('.webm', '.mp4'))
+                            combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".webm")
+                        else:
+                            combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".mp4")
                     elif(ln == 'english'):
                         
-                        audioPath,text = process_En_video(filename)
+                        audioPath,text,converted_video = process_En_video(filename)
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="EngIn")
                         # '''this code is written for Text to speech for speech Urdu language'''
                         speachPath = text_to_speech(filename_without_extension, text) 
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
-                        combine_audio_video(video_path, clonedVoicePath, output_path,ln="EngIn")
+                        if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
+                            output_path = os.path.join(app.config['output'], filename.replace('.webm', '.mp4'))
+                            combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".webm")
+                        else:
+                            combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".mp4")
                         
                     try:
                         video_files = os.listdir(app.config['output'])
@@ -75,7 +85,7 @@ def Dub():
                     
                         try:
                             audio_files = os.listdir(app.config['UrInaudioOutput'])
-                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename)]
+                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename_without_extension)]
                             return send_file(os.path.join(app.config['UrInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
                         except Exception as e:
                             return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
@@ -89,7 +99,7 @@ def Dub():
 
                         try:
                             audio_files = os.listdir(app.config['EngInaudioOutput'])
-                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename)]
+                            audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename_without_extension)]
                             return send_file(os.path.join(app.config['EngInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
                         except Exception as e:
                             return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500

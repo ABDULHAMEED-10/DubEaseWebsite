@@ -3,7 +3,7 @@ import speech_recognition as sr
 from googletrans import Translator
 import os
 from moviepy.editor import *
-
+import subprocess
 
 
 def extract_audio(video_path, audio_output_path):
@@ -37,15 +37,13 @@ def translate_text(text, target_language='ur'):
 def save_text_to_file(text, output_file):
     with open(output_file, 'w', encoding='utf-8') as file:
         file.write(text)
-def convert_video_to_mp4(video_path, output_path):
+def convert_video_to_mp4(video_path):
     
-    video_clip = VideoFileClip(video_path)
-    output_path = video_clip.replace('.webm', '.mp4')
-    video_clip.write_videofile(output_path, format='mp4')
-    video_clip.close()
+    output_path = video_path.replace('.webm', '.mp4')
+    subprocess.run(['ffmpeg', '-i', video_path, output_path])
     return output_path
 def process_En_video(filename):
-    
+    video_output_path=""
     video_path = os.path.join('E:/DubEase/Python Server/uploads/', filename)
     audioFileExtension = 'audio.wav'
     pathOfAudioFile = 'output/audio/EngIn/'
@@ -63,7 +61,8 @@ def process_En_video(filename):
     if video_path.lower().endswith(('.mp4')): 
         audio_output_path = extract_audio(video_path, audio_output_path)
     elif video_path.lower().endswith(('.webm')):
-        audio_output_path = convert_video_to_mp4(video_path, audio_output_path)
+        video_output_path = convert_video_to_mp4(video_path)
+        audio_output_path = extract_audio(video_output_path, audio_output_path)
     
 
     audio_text = convert_audio_to_text(audio_output_path)
@@ -71,4 +70,5 @@ def process_En_video(filename):
     translated_text = translate_text(audio_text)
     # Save translated text to a file
     save_text_to_file(translated_text, text_output_path)
-    return audio_output_path , translated_text
+    
+    return audio_output_path , translated_text , video_output_path
