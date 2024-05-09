@@ -55,7 +55,7 @@ def process_Ur_video(filename):
     audio_output_path = f'{pathOfAudioFile}{filename}{audioFileExtension}'
    
     pathOfTextFile = 'output/text/UrIn/'
-    textFileExtension = 'translated_text.txt'
+    textFileExtension = '.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
     

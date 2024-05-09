@@ -32,7 +32,7 @@ def Dub():
             return jsonify({"message": "Data sent unsuccessfully", "status": "error"}), 400
         else:
             f = request.files['source']
-            timestamp = str(time.time()).replace('.', '')
+            timestamp = time.strftime("%M%S")
             filename = secure_filename(f.filename)
             filename_without_extension, file_extension = os.path.splitext(filename)
             filename_with_timestamp = f"{filename_without_extension}_{timestamp}{file_extension}"

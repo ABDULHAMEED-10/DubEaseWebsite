@@ -38,7 +38,7 @@ def process_Ur_audio(filename):
     audio_output_path = 'output/audio/UrIn/'
 
     pathOfTextFile = 'output/text/UrIn/'
-    textFileExtension = 'translated_text.txt'
+    textFileExtension = '.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
    

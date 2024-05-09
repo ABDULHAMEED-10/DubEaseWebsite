@@ -56,7 +56,7 @@ def process_En_video(filename):
     audio_output_path = f'{pathOfAudioFile}{filename}{audioFileExtension}'
    
     pathOfTextFile = 'output/text/EngIn/'
-    textFileExtension = 'translated_text.txt'
+    textFileExtension = '.txt'
     text_output_path = f'{pathOfTextFile}{filename}{textFileExtension}'
 
     
