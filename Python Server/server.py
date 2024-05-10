@@ -54,7 +54,7 @@ def Dub():
                         if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                             output_path = os.path.join(app.config['output'], filename.replace('.webm', '.mp4'))
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".webm")
-                        else:
+                        elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".mp4")
                     elif(ln == 'english'):
                         
@@ -67,12 +67,15 @@ def Dub():
                         if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                             output_path = os.path.join(app.config['output'], filename.replace('.webm', '.mp4'))
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".webm")
-                        else:
+                        elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".mp4")
                         
                     try:
                         video_files = os.listdir(app.config['output'])
-                        video_dubbed = [filename for filename in video_files if filename.startswith(filename_without_extension)]
+                        if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
+                            video_dubbed = [file for file in video_files if file == filename_without_extension.replace(".webm",".mp4")]
+                        elif(filename.lower().endswith('.mp4')):
+                            video_dubbed = [file for file in video_files if file == filename_without_extension]
                         return send_file(os.path.join(app.config['output'], video_dubbed[0]), mimetype='video/mp4')
                     except Exception as e:
                         return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
