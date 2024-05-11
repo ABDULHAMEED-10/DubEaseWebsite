@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 import { logout } from "../../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import '../CSS/Home.css'
 
 const Navbar = () => {
 

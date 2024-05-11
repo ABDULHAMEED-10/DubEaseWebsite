@@ -2,23 +2,47 @@
     margin: 0;
     scroll-behavior: smooth;
   }
-  
-  /* body {
-    cursor: url("../images/cursor.png"), auto;
-  } */
-  
-  /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  
+:root{
+  --font-color: #344054;
+  --grad-rd: #e3dbf2;
+  --white: white;
+  --color-primary: #463690;
+  --black: black;
+  --border-color: rgba(255, 255, 255, 0.4);
+  --bg-color: rgba(255, 255, 255, 0.1);
+  --grad-blue: #d9eefb;
+  --heading-blk: #1d2538;
+  --txt-blk: #273150;
+  --border-hover-color: #8978ce;
+  --hover-bg-color: #faf9ff;
+  --shadow-blue: 11px;
+  --shadow-color: rgba(137, 112, 238, 0.27);
+}
 
-  .greenColor {
-    color: green !important;
-  }
-  .redColor {
-    color: red !important;
-  }
-  
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.greenColor {
+  color: green !important;
+}
+.redColor {
+  color: red !important;
+}
+.bg-light-red {
+  background-color: #9f40ec; 
+}
+.navbar-brand-black {
+  color: white !important; 
+}
+.dropdown-toggle::after {
+background-color: rgb(38, 35, 35);
+}
+.navbar {
+transition: all 0.3s ease;
+}
+.navbar:hover {
+box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}

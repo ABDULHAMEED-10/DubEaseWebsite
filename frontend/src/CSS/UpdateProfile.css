@@ -7,19 +7,16 @@
     align-items: center;
     position: fixed;
     top: 5%;
-    background-color: rgb(38, 35, 35);
+    background-color: var(--grad-rd);
 
 
     left: 0;
   }
-  input:focus {
-    outline: none;
-    border-color: #4092f6;
-    box-shadow: 0 0 10px #4195fc;
-  }
+
   .updateProfileBox {
     box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
-    background-color: rgba(255,255,255,0.13);
+    border-radius: 30px;
+    background-color: #463690;
     width: 25vw;
     height: 70vh;
     box-sizing: border-box;
@@ -63,11 +60,7 @@
     font: 300 1vmax cursive;
     outline: none;
   }
-  .updateProfileForm > div > input:hover {
 
-    background-color: rgb(235, 235, 235);
-
-  }
   
   .updateProfileForm > div > svg {
     position: absolute;
@@ -106,10 +99,10 @@
   
   .updateProfileBtn {
     border: none;
-    background-color: #ffc009;
-    color: #383634;
-    font: 300 1vmax "Roboto";
-    font-weight: bolder;
+    background-color: rgb(33, 32, 32);
+    font: 400 1vmax "Roboto";
+    text-transform: uppercase;
+    color: white;
     width: 100%;
     padding: 0.8vmax;
     cursor: pointer;
@@ -120,7 +113,7 @@
   }
   
   .updateProfileBtn:hover {
-    background-color: #ff8c00;
+    background-color: white;
     color: #000000;
 
   }

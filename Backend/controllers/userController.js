@@ -11,7 +11,8 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
     
     const opt = {
         folder: "avatars",
-        width: 150,
+        width: 600,
+        height:600,
         crop: "scale",
     };
     let myCloud; 
@@ -33,24 +34,13 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
         sendToken(user, 201, res);
     }
     catch (error) {
-        if (error.code === 11000 && error.keyPattern.email === 1) {
-            res.status(400).json({success:false, message: 'Email already exists.' });
-        }
-        if (error.code === 500) {
-            return res.status(500).json({
-                success: false,
-                message: "Image size exceed limits",
-            });
-            
-        }
-
-        else {
-            res.status(400).json({
-                success: false,
-                message: "Error while registeration",
-            });
+        
+        res.status(400).json({
+            success: false,
+            message: "Error while registeration",
+        });
            
-          }
+          
       }
       
 });
