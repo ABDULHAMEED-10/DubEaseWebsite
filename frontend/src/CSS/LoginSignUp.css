@@ -7,7 +7,7 @@
     align-items: center;
     background-color: var(--grad-rd);
     position: fixed;
-    top: 5%;
+  
     left: 0;
   }
   
@@ -20,7 +20,7 @@
     box-sizing: border-box;
     overflow: hidden;
     box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
-    
+    margin-top: 5%;
   }
   /* .LoginHeader{
      */
@@ -57,6 +57,10 @@
     width: 50%;
     border: none;
     transition: all 0.5s;
+    
+  }
+  .LoginSignUpBox{
+    margin-top: 25vh;
   }
   
   .loginForm,
@@ -203,11 +207,12 @@
   }
   
   @media screen and (max-width: 600px) {
-
+  
     .LoginSignUpBox {
       
       width: 100vw;
       height: 95vh;
+      border-radius: 0%;
     }
     .login_signUp_toggle {
       height: 5vmax;

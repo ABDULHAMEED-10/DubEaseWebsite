@@ -10,7 +10,8 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import { useNavigate } from "react-router-dom";
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+import Navbar from "../Home/components/Navbar/Navbar";
+
 
 
 const UpdatePassword = () => {
@@ -62,7 +63,7 @@ const UpdatePassword = () => {
       ) : (
         <Fragment>
             <MetaData title="Change Password" />
-            <Navbar/>
+            <Navbar />
           <div className="updatePasswordContainer" style={{zIndex:"-1"}}>
             <div className="updatePasswordBox">
               <h2 className="updatePasswordHeading">Update Password</h2>

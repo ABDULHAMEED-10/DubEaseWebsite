@@ -1,18 +1,14 @@
 // Settings.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import SettingsIcon from "@mui/icons-material/Settings";
 import "../CSS/Settings.css";
-import FeedbackForm from "../components/SettingsFeedback";
 import LanguageSelection from "../components/LanguageSelection";
 import LanguageIcon from "@mui/icons-material/Language";
-import FeedbackIcon from "@mui/icons-material/Feedback";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import HistoryIcon from "@mui/icons-material/History";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteAccount from "../components/DeleteAccount";
+import Navbar from "../components/Navbar/Navbar";
 
 
 const Settings = () => {
@@ -32,15 +28,8 @@ const Settings = () => {
   return (
     <>
       <Navbar />
-
       <div className="settingmaincontainer">
         <div className="settingheader">
-          <div className="settingheaderleft">
-            <SettingsIcon
-              style={{ width: 55, marginBottom: "8px" }}
-            />
-            <h2 className="settingh1 fs-2 fw-semibold">Settings</h2>
-          </div>
           <div className="settingheaderright">
             <p>Settings</p>
             {clickedItem === "language" && (
@@ -86,32 +75,26 @@ const Settings = () => {
                 }}
               >
                 <div className={clickedItem === "language" ? "clicked" : ""}>
-                  <LanguageIcon className="settingsimg text-primary" />
-                  <h4 className="settingh4">Language Selection </h4>
-                </div>
-              </li>
-              <li onClick={() => handleItemClick("feedback")}>
-                <div className={clickedItem === "feedback" ? "clicked" : ""}>
-                  <FeedbackIcon className="settingsimg text-danger" />
-                  <h4 className="settingh4">Provide Feedback</h4>
+                  <LanguageIcon className="settingsimg text-dark" />
+                  <h4 className="settingh4 text-dark">Language Selection </h4>
                 </div>
               </li>
               <li onClick={() => handleItemClick("account")}>
                 <div className={clickedItem === "account" ? "clicked" : ""}>
-                  <ManageAccountsIcon className="settingsimg" />
-                  <h4 className="settingh4">Account Settings </h4>
+                  <ManageAccountsIcon className="settingsimg text-dark" />
+                  <h4 className="settingh4 text-dark">Account Settings </h4>
                 </div>
               </li>
               <li onClick={() => handleItemClick("history")}>
                 <div className={clickedItem === "history" ? "clicked" : ""}>
-                  <HistoryIcon className="settingsimg text-secondary" />
-                  <h4 className="settingh4">View History </h4>
+                  <HistoryIcon className="settingsimg text-dark" />
+                  <h4 className="settingh4 text-dark">View History </h4>
                 </div>
               </li>
               <li onClick={() => handleItemClick("delete")}>
                 <div className={clickedItem === "delete" ? "clicked" : ""}>
-                  <DeleteIcon className="settingsimg" />
-                  <h4 className="settingh4">Delete Account </h4>
+                  <DeleteIcon className="settingsimg text-dark" />
+                  <h4 className="settingh4 text-dark">Delete Account </h4>
                 </div>
               </li>
             </ul>
@@ -119,11 +102,10 @@ const Settings = () => {
 
           {clickedItem === "language" && <LanguageSelection />}
 
-          {clickedItem === "feedback" && <FeedbackForm />}
           {clickedItem === "delete" && <DeleteAccount />}
         </div>
       </div>
-      <Footer />
+     
     </>
   );
 };

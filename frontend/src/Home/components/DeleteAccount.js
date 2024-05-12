@@ -19,7 +19,7 @@ const DeleteAccount = () => {
                 <p>Are you sure you want to delete your account?</p>
                 <div className='ButtonC'>
                 <button onClick={handleDelete}>Yes</button>
-                <button onClick={() => navigate(-1)}>No</button>
+                <button onClick={() => navigate("/me")}>No</button>
                 </div>
             </div>
         </div>

@@ -16,8 +16,9 @@ import { Tooltip } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../layout/Loader/Loader";
 import { generate_Dub,clearState, clearErrors } from "../../actions/dubbingAction";
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
-import Footer from "../components/Footer";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
+
 
 
 const StartVideoRecordUpload = () => {
@@ -233,6 +234,7 @@ const StartVideoRecordUpload = () => {
 
 
   return (
+    
     <Fragment>
       {loading ? (
         <Loader />
@@ -240,9 +242,9 @@ const StartVideoRecordUpload = () => {
           <Fragment>
             
           <MetaData title="Dub Video" />
-            <Navbar />
+       <Navbar />
           <div
-            className="container-fluid bg-dark text-white container1"
+            className="container-fluid text-white container1"
             style={{ zIndex: "-1" }}
           >
             <div className="vh-1</div>00 toogleContainer col-md-8">
@@ -486,11 +488,12 @@ const StartVideoRecordUpload = () => {
                 )}
               </div>
             </div>
-          </div>
-          <Footer />
+              </div>
+             <Footer />
         </Fragment>
       )}
     </Fragment>
+
   );
 };
 

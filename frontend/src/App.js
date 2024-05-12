@@ -14,7 +14,7 @@ import { loadUser } from './actions/userAction';
 import StartVideoDubbing from './Home/pages/StartVideoDubbing';
 import Root from './Home/pages/Root';
 import About from './Home/pages/About';
-import Home from './Home/pages/Home';
+import Home from './Home/pages/Homepage';
 import Settings from './Home/pages/Settings';
 
 

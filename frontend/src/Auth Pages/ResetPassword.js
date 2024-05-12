@@ -8,7 +8,8 @@ import MetaData from "../layout/MetaData";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+import Navbar from "../Home/components/Navbar/Navbar";
+
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -57,7 +58,7 @@ const ResetPassword = () => {
       ) : (
         <Fragment>
             <MetaData title="Change Password" />
-            <Navbar/>
+        <Navbar />
           <div className="resetPasswordContainer" style={{zIndex:"-1"}}>
             <div className="resetPasswordBox">
               <h2 className="resetPasswordHeading">Reset Password</h2>

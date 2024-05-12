@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import ContactForm from "../components/ContactForm";
-import Navbar from "../components/Navbar";
-import Footer from '../components/Footer';
 import { BsActivity } from "react-icons/bs";
 import FAQ from '../components/FAQs';
+import mic from '../../assets/mic.jpg';
+import dub from '../../assets/dub.jpg';
+import me from '../../assets/me.png';
+import ham from '../../assets/ham.png';
 import "../CSS/About.css";
+
+import Navbar from '../components/Navbar/Navbar';
+import Footer from '../components/Footer/Footer';
 const About = () => {
   const [faqs, setFaqs] = useState([
     {
@@ -56,9 +61,10 @@ const About = () => {
     );
   };
   return (
+    <>
+      <Navbar />
     <div style={{backgroundColor:"#e3dbf2"}}>
-      <Navbar/>
-    <div className="container-fluid mt-5 par">
+    <div className="container-fluid par">
       <div className="container_1">
         <div className="text_container">
           <div className="about-section p-4 text-white responsive-div">
@@ -82,12 +88,12 @@ const About = () => {
         </div>
 
         <div className="mt-4 mt-md-0 divOfImage">
-          <img src={process.env.PUBLIC_URL + '/assets/mic.jpg'} alt="Microphone" className="img-fluid" style={{ height: '450px', borderRadius:"30px" }} />
+          <img src={mic} alt="Microphone" className="img-fluid" style={{ height: '450px', borderRadius:"30px" }} />
         </div>
       </div>
       <div className="container_1">
               <div className="text-center divOfImage" >
-                <img src={process.env.PUBLIC_URL + '/assets/dub.jpg'} alt="DubEase" className="img-fluid mt-5" style={{ height:"410px",borderRadius:"30px"}} />
+                <img src={dub} alt="DubEase" className="img-fluid mt-5" style={{ height:"410px",borderRadius:"30px"}} />
               </div>
               <div className="text-start text_container " style={{ borderRadius:"30px" }}>
                 <h2 className="fw-bolder fs-1 mt-5">Why DubEase?</h2>
@@ -110,14 +116,14 @@ const About = () => {
             <div >
             <div className="about-section text-white responsive-div ">
             <h3 className="section-heading text-body fs-2  fw-bolder">Adil Masood</h3>
-            <img src={process.env.PUBLIC_URL + '/assets/me.png'} alt="Me" className="img-fluid "  />
+            <img src={me} alt="Me" className="img-fluid "  />
             </div>
             </div>
             
             <div >
             <div className="about-section text-white responsive-div">
             <h3 className="section-heading text-body fs-2 fw-bolder">Abdul Hameed</h3>
-            <img src={process.env.PUBLIC_URL + '/assets/ham.png'} alt="Ham" className="img-fluid" />
+            <img src={ham} alt="Ham" className="img-fluid" />
               </div>
               
           </div>
@@ -151,7 +157,7 @@ const About = () => {
           <div className="container-fluid responsive-div p-3 mt-4" style={{height:"150px"}}>
             <h2 className="text-body fs-2  fw-bolder">Reach Out to Us</h2>
               <div className='d-flex flex-column'>
-                <p className='text-body'>Your suggestions are valuable to us and help us to improve our services. We are committed to continuously enhancing our platform to better. Thank you for your support.  </p>
+                <p className='text-body'>Your suggestions are valuable to us and help us to improve our services. We are committed to continuously enhancing our platform to better.  </p>
                 
               </div>
               
@@ -160,8 +166,10 @@ const About = () => {
         </div>
       </div>
       </div>
-      <Footer/>
+     
       </div>
+     <Footer />
+      </>
   );
 };
 

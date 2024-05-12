@@ -1,29 +1,28 @@
-:root{
-    --primary-bg-color:#242020;
-    --button-color: #ffc009;
-    --primary-color:#000;
-}
+
 .container1{
     width: 100vw;
-    height: 100vh;
     max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #e3dbf2;
     
 }   
 
 .toogleContainer{
     width: 80vw;
-    max-height: 90%;
+    max-height: 90vh;
     box-sizing: border-box;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     /* background-color: #9f40ec;  */
-    background-color: var(--primary-bg-color);
+    background-color: #463690;
     border: none;
+    border-radius: 30px;
+    margin-top: 9%;
+    margin-bottom: 2%;
     
     
 }
@@ -36,7 +35,6 @@
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    background-color: #ebebeb;
     height: 85vh ;
 }
 .mainVideoBox > .videoBox,
@@ -50,9 +48,11 @@
 .orignalVideoBox,
 .dubbedVideoBox{
     border: none;
-    background-color: white;
+    background-color:#e3dbf2;
     width: 33vw;
     height: 41vh;
+    border-radius: 10px;
+    
 }
 .orignalAudioBox,
 .dubbedAudioBox{
@@ -60,16 +60,19 @@
     height: 10vh;
     padding: 0.5vmax;
     border: none;
-    background-color: white;
+    background-color: #e3dbf2;
+    border-radius: 10px;
 
 }
 video {
     width: 100%; /* Make the video element fill its container */
     height: 100%; /* Maintain aspect ratio */
+    border-radius: 10px;
 }
 audio{
     width: 100%;
     height: 100%;
+    border-radius: 10px;
   
 }
 .startButton{
@@ -111,10 +114,7 @@ audio{
 }
 .videoFileName,
 .audioFileName{
-    color: var(--primary-color);    
-    
-    
-
+    color: white   
 }
 
 .recordVideo > button,
@@ -127,7 +127,7 @@ audio{
     border:none;
     box-shadow: 0 2px 5px #bebebe;
     box-sizing: border-box;
-    color: var(--primary-color);
+    color: black;
     transition: background-color 0.5s ease;
 
 }
@@ -142,9 +142,9 @@ audio{
     font: 400 1vmax cursive;
     padding: 0 1vmax;
     border-radius: 10px;
-    transition: background-color 0.5s ease;
-    background-color: var(--button-color);
-    color: var(--primary-color);
+    transition: background-color 0.3s ease;
+    background-color: white;
+    color: black;
     display: flex;
     align-items: center;
 }
@@ -157,7 +157,8 @@ audio{
 
 .browseAudio >label:hover,
 .browseVideo >label:hover{
-    background-color: #ff8c00;
+    background-color: rgb(32, 32, 32);
+    color: white;
 
 }
 
@@ -172,20 +173,19 @@ audio{
     padding: 0 1vmax;
     color: black;
     border-radius: 10px;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.3s ease;
     
     
 }
 
 .startButton > input:hover{
-    background-color: var(--button-color);
+    background-color: rgb(32, 32, 32);
+    color: white;
 }
 .onCameraIcons>button{
     position: relative;
     background-color: gray;
-    color: var(--primary-color); 
-    opacity: 0.7;
-    transition: background-color 0.5s ease;
+    color: black; 
     border-radius: 100px;
     margin: 1vmax;
     text-align: center;
@@ -194,7 +194,7 @@ audio{
     width: 3vw;
     border: none;
     font: 400 1vmax cursive;
-    transition: background-color 0.5s ease;
+    transition: background-color 0.3s ease;
 }
 .onCameraIcons>button:hover,
 .onVoiceIcons>button:hover{
@@ -337,6 +337,7 @@ audio{
   
   .orignalVideoBox, .dubbedVideoBox,.orignalAudioBox, .dubbedAudioBox {
     width: 49%;
+    
 
   }
   .browseVideo ,.browseAudio{
@@ -353,7 +354,7 @@ audio{
   
   }
   .browseVideo > label, .browseAudio > label {
-    height: 15vw;
+    height: 11vw;
     font: 400 2.5vmax cursive;
   }
   .Audio_Video_toggle > p {
@@ -394,7 +395,11 @@ audio{
 }
 .toogleContainer{
     width: 100vw;
-    max-height: 100%;
+    max-height: 95vh;
+    border-radius:0px;
+    margin-top: 15vh;
+    margin-bottom:0% ;
+    
 }
 .onCameraIcons>button{
     opacity: 1;

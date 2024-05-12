@@ -6,12 +6,10 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 5%;
     background-color: var(--grad-rd);
-
-
     left: 0;
   }
+
 
   .updateProfileBox {
     box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
@@ -21,6 +19,7 @@
     height: 70vh;
     box-sizing: border-box;
     overflow: hidden;
+    margin-top: 5%;
   }
   
   .updateProfileHeading {
@@ -117,16 +116,16 @@
     color: #000000;
 
   }
-  
+
   @media screen and (max-width: 600px) {
-    .updateProfileContainer {
-      background-color: black;
-    }
+    
     .updateProfileBox {
       width: 100vw;
       height: 95vh;
       box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
-      background-color: rgba(255,255,255,0.13);
+      border-radius: 0%;
+      margin-top: 25vh;
+      
     }
   
     .updateProfileForm {
@@ -155,5 +154,9 @@
     .updateProfileBtn {
       font: 300 1.9vmax "Roboto";
       padding: 1.8vmax;
+    }
+    .updateProfileHeading{
+      font-size: 3vmax;
+      padding: 2.5vmax;
     }
   }

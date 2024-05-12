@@ -4,9 +4,10 @@ import MetaData from "../layout/MetaData";
 import Loader from "../layout/Loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import "../CSS/Profile.css";
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
 import { Tooltip } from "@material-ui/core";
+import Navbar from "../Home/components/Navbar/Navbar";
 const Profile = () => {
   let { user, loading, isAuthenticated } = useSelector((state) => state.user);
 
@@ -28,14 +29,14 @@ const Profile = () => {
         <Loader />
       ) : (
           <Fragment>
-          <Navbar/>
+        
             <MetaData title={`${user.name}'s Profile`} />
-          
+          <Navbar />
             <section className="vh-100" style={{ backgroundColor: '#e3dbf2' }}>
       <MDBContainer className="py-5 h-100">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="6" className="mb-4 mb-lg-0">
-            <MDBCard className="mb-3" style={{ borderRadius: '.5rem' }}>
+            <MDBCard className="mb-3" style={{ borderRadius: '.5rem' , marginTop:"15%"}}>
               <MDBRow className="g-0">
                 <MDBCol md="4" className="gradient-custom text-center text-white"
                   style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>

@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, forgotPassword } from "../actions/userAction";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
-// import { useNavigate } from "react-router-dom";
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+import Navbar from '../Home/components/Navbar/Navbar';
 
 
 const ForgotPassword = () => {
@@ -47,8 +46,8 @@ const ForgotPassword = () => {
       ) : (
         <Fragment>
             <MetaData title="Forgot Password" />
-            <Navbar/>
-          <div className="forgotPasswordContainer " style={{zIndex:"-1"}}>
+          <Navbar />  
+          <div className="forgotPasswordContainer ">
             <div className="forgotPasswordBox">
               <h2 className="forgotPasswordHeading">Forgot Password</h2>
 

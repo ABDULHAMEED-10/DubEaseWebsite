@@ -9,7 +9,8 @@ import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector  } from "react-redux";
 import { clearErrors, login, register } from "../actions/userAction";
 import { useAlert } from "react-alert";
-import Navbar from "E:/DubEase/frontend/src/Home/components/Navbar.js";
+import Navbar from '../Home/components/Navbar/Navbar';
+
 
 
 
@@ -126,8 +127,7 @@ return (
     ) : (
         <Fragment>
         <MetaData title="Login SignUp" />
-          
-        <Navbar/>
+         <Navbar />
         <div className="LoginSignUpContainer " style={{zIndex:"-1"}}>
           <div className="LoginSignUpBox">
             <div className="LoginHeader">
