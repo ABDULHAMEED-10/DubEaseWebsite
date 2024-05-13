@@ -39,12 +39,14 @@ body {
   cursor: pointer;
 }
 
-.try__btn span {
+.try__btn  span {
   color: white;
   font-weight: 400;
   font-size: 14px;
   transition: all 0.25s;
 }
+
+
 
 .try__btn img {
   display: flex;
@@ -59,7 +61,7 @@ body {
 }
 
 .try__btn:hover img {
-  transform: translateX(-140px);
+  transform: translateX(-135px);
 }
 .try__btn:hover span {
   transform: translateX(30px);

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import ArrowDown from '../../../assets/arrowdown.png';
 import ArrowRight from '../../../assets/arrowright.png';
 import Logo from '../../../assets/logo.png';
-import profile from '../../../assets/Profile.png';
 import NavHamburger from './NavHamburger';
 import './Navbar.css';
 import { logout } from "../../../actions/userAction";
@@ -79,10 +78,10 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="nav-try">
-              <div className="try__btn">
-                <Link to='/login'><span>Login / Signup</span></Link>
+              <Link className="try__btn" to="/login">
+                <span>Login / Signup</span>
                 <img src={ArrowRight} alt="Arrow Right" />
-              </div>
+              </Link>
             </div>
           )}
           {/* Media query pr nav center gaib or nav ham show hoga */}

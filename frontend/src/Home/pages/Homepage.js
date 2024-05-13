@@ -1,6 +1,10 @@
 import '../CSS/Homepage.css';
 import audio6 from '../../assets/audio1.wav';
 import audio2 from '../../assets/audio2.wav';
+import audio4 from '../../assets/audio4.wav';
+import audio3 from '../../assets/audio3.wav';
+import audio5 from '../../assets/audio5.wav';
+import audio1 from '../../assets/audio6.wav';
 import background from '../../assets/background-2.webp';
 import Benefits1 from '../../assets/benefits1.png';
 import Benefits2 from '../../assets/benefits2.png';
@@ -38,8 +42,7 @@ const Homepage = () => {
   const audioRef = useRef(null);
   const [musicOn, setMusicOn] = useState(false);
 
-  // Selected person ko identify krne k lye or uska kisi bhi change hone ma hisa
-  // due to scope issue we use useRef+ easy to use
+  
   useEffect(() => {
     if (prevSelectedPersonRef.current !== null) {
       const prevElement = document.getElementById(
@@ -59,8 +62,12 @@ const Homepage = () => {
 
     if (selectedPerson !== 0) {
       const audioFiles = {
-        2: audio2,
-        6: audio6,
+        1: audio1,
+        5: audio4,
+        2: audio6,
+        4: audio3,
+        3: audio5,
+        6: audio2,
       };
 
       const audioFile = audioFiles[selectedPerson];

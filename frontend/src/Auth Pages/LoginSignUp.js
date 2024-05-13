@@ -10,6 +10,7 @@ import { useDispatch, useSelector  } from "react-redux";
 import { clearErrors, login, register } from "../actions/userAction";
 import { useAlert } from "react-alert";
 import Navbar from '../Home/components/Navbar/Navbar';
+import Profile from '../assets/Profile.png';
 
 
 
@@ -40,8 +41,8 @@ const LoginSignUp = () => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState("/assets/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("/assets/Profile.png");
+  const [avatar, setAvatar] = useState(Profile);
+  const [avatarPreview, setAvatarPreview] = useState(Profile);
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -203,7 +204,7 @@ return (
               </div>
 
               <div id="registerImage">
-                <img src={avatarPreview} alt="Avatar Preview" />
+                  <img src={avatarPreview ? avatarPreview : Profile}  alt="Profile" />
                 <input
                   type="file"
                   name="avatar"
