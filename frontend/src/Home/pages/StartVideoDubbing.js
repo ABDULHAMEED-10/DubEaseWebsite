@@ -261,7 +261,7 @@ const StartVideoRecordUpload = () => {
 
               <div className="mainVideoBox" ref={VideoTab}>
                 {/* video box start  */}
-                <div className="videoBox ">
+                <div className="videoBox"  style={{ opacity: audioUploaded ? 0.3 : 1 }}>
                   <div className="orignalVideoBox">
                     <ReactPlayer
                       controls
@@ -285,7 +285,7 @@ const StartVideoRecordUpload = () => {
 
                 {/* video box end */}
                 {/* audio box start */}
-                <div className="AudioBox ">
+                <div className="AudioBox "  style={{ opacity: videoUploaded ? 0.3 : 1 }}>
                   <div className="orignalAudioBox">
                     {audioUploaded && (
                       <ReactAudioPlayer src={selectedFile} controls />
@@ -301,7 +301,7 @@ const StartVideoRecordUpload = () => {
 
                 <div className="mainUploadRecordVideoAudio">
                   <div className="uploadVideo">
-                    {!videoUploaded && (
+                    {(!audioUploaded) && (
                       <form
                         className="browseVideo"
                         id="myForm"
@@ -318,10 +318,10 @@ const StartVideoRecordUpload = () => {
                         {videoFileName?.name && (
                           <p className="videoFileName">
                             {videoFileName.name
-                              .split(" ")
-                              .slice(0, 3)
-                              .join(" ")}
-                            {/* {videoFileName.name.split(" ").length > 2 && "..."} */}
+                              .split("")
+                              .slice(0, 8)
+                              .join("")}
+                              {videoFileName.name.split("").length > 1 && "(video)"}
                           </p>
                         )}
                         <input
@@ -335,7 +335,7 @@ const StartVideoRecordUpload = () => {
                       </form>
                     )}
 
-                    {!audioUploaded && (
+                    {!videoUploaded && (
                       <form
                         className="browseAudio"
                         id="myForm"
@@ -352,10 +352,10 @@ const StartVideoRecordUpload = () => {
                         {audioFileName?.name && (
                           <p className="audioFileName">
                             {audioFileName.name
-                              .split(" ")
-                              .slice(0, 3)
-                              .join(" ")}
-                            {/* {audioFileName.name.split(" ").length > 3 && "..."} */}
+                              .split("")
+                              .slice(0, 8)
+                              .join("")}
+                            {audioFileName.name.split("").length > 1 && "(audio)"}
                           </p>
                         )}
                         <input
