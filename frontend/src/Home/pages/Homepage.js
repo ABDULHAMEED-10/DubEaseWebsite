@@ -163,7 +163,7 @@ const Homepage = () => {
             <div className="music__dotted"></div>
             <div
               className={`${
-                musicOn === true ? 'd-none' : 'music__outer-circle'
+                musicOn === true ? '' : 'music__outer-circle'
               }`}
             >
               <div className={`music__middle-circle`}>
