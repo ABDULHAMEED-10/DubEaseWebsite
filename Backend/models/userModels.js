@@ -60,21 +60,7 @@ userSchema.methods.getJWTToken = function () {
         expiresIn: process.env.JWT_EXPIRE
     });
 };
-//reset password
-userSchema.methods.getResetPasswordToken = function () {
-    //genrate token
-    const resetToken = crypto.randomBytes(20).toString("hex");
-    //hashing and storing in resetpasswordtoken in schema
-   
-    this.resetPasswordToken= crypto
-        .createHash("sha256")
-        .update(resetToken)
-        .digest("hex");
-    this.resetPasswordExpire = Date.now() + 25 * 60 * 1000;
 
-    
-    return resetToken;
-}
 
 
 

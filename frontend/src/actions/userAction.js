@@ -30,6 +30,7 @@ import {
   // Login
   export const login = (email, password) => async (dispatch) => {
     try {
+      
       dispatch({ type: LOGIN_REQUEST });
   
       const config = {
@@ -55,7 +56,7 @@ import {
   // Register
   export const register = (userData) => async (dispatch) => {
     try {
-      
+     
       dispatch({ type: REGISTER_USER_REQUEST });
   
       const config = { headers: { "Content-Type": "multipart/form-data"} ,withCredentials: true};
@@ -97,7 +98,16 @@ export const loadUser = () => async (dispatch) => {
       dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
     }
   };
+//delte user Account
+export const deleteUser = () => async (dispatch) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/v1/delete`,{ withCredentials: true});
   
+      dispatch({ type: LOGOUT_SUCCESS });
+    } catch (error) {
+      dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+    }
+  };
   // Update Profile
   export const updateProfile = (userData) => async (dispatch) => {
     try {

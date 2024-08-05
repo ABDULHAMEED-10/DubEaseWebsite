@@ -2,13 +2,16 @@ import React, { Fragment, useRef, useState, useEffect } from "react";
 import "../CSS/LoginSignUp.css";
 import Loader from "../layout/Loader/Loader";
 import { Link, useNavigate } from "react-router-dom";
-
+import MetaData from "../layout/MetaData";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector  } from "react-redux";
 import { clearErrors, login, register } from "../actions/userAction";
 import { useAlert } from "react-alert";
+import Navbar from '../Home/components/Navbar/Navbar';
+import Profile from '../assets/Profile.png';
+
 
 
 
@@ -38,8 +41,8 @@ const LoginSignUp = () => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState("/assets/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("/assets/Profile.png");
+  const [avatar, setAvatar] = useState(Profile);
+  const [avatarPreview, setAvatarPreview] = useState(Profile);
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +51,10 @@ const LoginSignUp = () => {
 
   const registerSubmit = (e) => {
     e.preventDefault();
+    if (password.length < 8) {
+      alert.info("Password must be 8 digits");
+      return;
+    }
     const myForm = new FormData();
     myForm.set("name", name);
     myForm.set("email", email);
@@ -70,7 +77,14 @@ const registerDataChange = (e) => {
       }
       reader.readAsDataURL(e.target.files[0]);
 
-  } else {
+  } else if (e.target.name === "name") {
+    const regex = /^[a-zA-Z\s]+$/;
+    if (regex.test(e.target.value) || e.target.value === "") {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  }
+
+  else {
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 };
@@ -84,12 +98,9 @@ useEffect(() => {
     dispatch(clearErrors());
   }
   
-
   if (isAuthenticated) {
     navigate(redirect)
-    
 
-    
   }
 }, [dispatch, error, alert, isAuthenticated,navigate]);
 
@@ -115,8 +126,10 @@ return (
     {loading ? (
       <Loader />
     ) : (
-      <Fragment>
-        <div className="LoginSignUpContainer">
+        <Fragment>
+        <MetaData title="Login SignUp" />
+         <Navbar />
+        <div className="LoginSignUpContainer " style={{zIndex:"-1"}}>
           <div className="LoginSignUpBox">
             <div className="LoginHeader">
               <div className="login_signUp_toggle">
@@ -149,7 +162,7 @@ return (
               <Link to="/password/forgot" className="forget">Forget Password ?</Link>
                 <input type="submit" value="Login" className="loginBtn" />
                  
-    </form>
+            </form>
             <form
               className="signUpForm"
               ref={registerTab}
@@ -191,7 +204,7 @@ return (
               </div>
 
               <div id="registerImage">
-                <img src={avatarPreview} alt="Avatar Preview" />
+                  <img src={avatarPreview ? avatarPreview : Profile}  alt="Profile" />
                 <input
                   type="file"
                   name="avatar"
