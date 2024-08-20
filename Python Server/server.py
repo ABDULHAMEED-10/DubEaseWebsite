@@ -8,6 +8,7 @@ from Dub import process_content
 import time
 import os
 from flask import send_file
+from utils import delete_folder
 
 app = Flask(__name__)
 
@@ -16,8 +17,8 @@ os.makedirs('./dubOutput', exist_ok=True)
 
 app.config['uploads'] = './uploads'
 app.config['output'] = './dubOutput'
-app.config['UrInaudioOutput'] = './clone/URIn'
-app.config['EngInaudioOutput'] = './clone/EngIn'
+app.config['UrInaudioOutput'] = '.output/clone/URIn'
+app.config['EngInaudioOutput'] = '.output/clone/EngIn'
 
 
 CORS(app, origins='http://localhost:3000')
@@ -56,7 +57,7 @@ def Dub():
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".webm")
                         elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".mp4")
-                        
+                        delete_folder(['./uploads','./output/audio','./output/text'])
                     elif(ln == 'english'):
                         
                         audioPath,text,converted_video = process_content(filename,source_lang="EngIn",target_lang="ur",format="video")
@@ -70,6 +71,7 @@ def Dub():
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".webm")
                         elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".mp4")
+                        delete_folder(['./uploads','./output/audio','./output/text','./output/textToSpeech'])
                     try:
                         video_files = os.listdir(app.config['output'])
                         if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
@@ -86,7 +88,7 @@ def Dub():
                         filename_without_extension,clonedVoicePath = process_filename(filename,ln="UrIn")
                         # this code is written for Test to speach for speech English language
                         voiceCloningEnglish(text,audioPath,clonedVoicePath)
-                
+                        delete_folder(['./uploads','./output/audio','./output/text'])
                     
                         try:
                             audio_files = os.listdir(app.config['UrInaudioOutput'])
@@ -101,6 +103,7 @@ def Dub():
                         speachPath = text_to_speech(filename_without_extension, text) 
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
+                        delete_folder(['./uploads','./output/audio','./output/text','./output/textToSpeech'])
                       
                         try:
                             audio_files = os.listdir(app.config['EngInaudioOutput'])

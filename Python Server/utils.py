@@ -7,12 +7,12 @@ from moviepy.video.io.VideoFileClip import VideoFileClip
 from moviepy.editor import *
 import subprocess
 
-def convert_audio_to_text(audio_path):
+def convert_audio_to_text(audio_path,sourcelanguage):
     recognizer = sr.Recognizer()
     with sr.AudioFile(audio_path) as source:
         try:
-            audio_data = recognizer.record(source)
-            audio_text = recognizer.recognize_google(audio_data)
+            audio_data = recognizer.record(source, duration=1000)
+            audio_text = recognizer.recognize_google(audio_data, language=sourcelanguage)
         except sr.UnknownValueError:
             raise Exception("Audio is inaudible. Please choose a different audio.")
         except sr.RequestError as e:
@@ -51,4 +51,10 @@ def convert_video_to_mp4(video_path):
     return output_path
 
 
-         
+def delete_folder(file_paths):
+    for file_path in file_paths:
+        if os.path.isdir(file_path):
+            shutil.rmtree(file_path)
+        else:
+            os.remove(file_path)
+
