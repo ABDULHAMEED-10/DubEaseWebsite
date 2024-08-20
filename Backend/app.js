@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(fileUpload());
 // Allow requests from http://localhost:3000
 app.use(cors({
-  origin: ['http://192.168.100.7:3000','http://localhost:3000'],
+  origin: ['http://192.168.100.7:3000','http://localhost:3000','*'],
   credentials: true
 }));
 app.use("/api/v1", user);
