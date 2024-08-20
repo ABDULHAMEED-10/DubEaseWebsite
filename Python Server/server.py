@@ -11,6 +11,9 @@ from flask import send_file
 from utils import delete_temporary_files
 app = Flask(__name__)
 
+os.makedirs('./uploads', exist_ok=True)
+os.makedirs('./dubOutput', exist_ok=True)
+
 app.config['uploads'] = './uploads'
 app.config['output'] = './dubOutput'
 app.config['UrInaudioOutput'] = './clone/URIn'
@@ -53,6 +56,8 @@ def Dub():
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".webm")
                         elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="UrIn",extension=".mp4")
+                        
+                        delete_temporary_files(f'./uploads/{filename_with_timestamp}',audioPath,text,converted_video,clonedVoicePath) 
                     elif(ln == 'english'):
                         
                         audioPath,text,converted_video = process_content(filename,source_lang="EngIn",target_lang="ur",format="video")
@@ -66,13 +71,14 @@ def Dub():
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".webm")
                         elif(filename.lower().endswith('.mp4')):
                             combine_audio_video(video_path,converted_video, clonedVoicePath, output_path,ln="EngIn",extension=".mp4")
-                        
+                        delete_temporary_files(f'./uploads/{filename_with_timestamp}',audioPath,text,converted_video,clonedVoicePath,speachPath) 
                     try:
                         video_files = os.listdir(app.config['output'])
                         if(filename.lower().startswith("camera_video") and filename.lower().endswith('.webm')):
                             video_dubbed = [file for file in video_files if file == filename_without_extension.replace(".webm",".mp4")]
                         elif(filename.lower().endswith('.mp4')):
                             video_dubbed = [file for file in video_files if file == filename_without_extension]
+                        
                         return send_file(os.path.join(app.config['output'], video_dubbed[0]), mimetype='video/mp4')
                     except Exception as e:
                         return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
@@ -86,6 +92,7 @@ def Dub():
                         try:
                             audio_files = os.listdir(app.config['UrInaudioOutput'])
                             audio_dubbed = [filenames for filenames in audio_files if filenames.startswith(filename_without_extension)]
+                            delete_temporary_files(f'./uploads/{filename_with_timestamp}',audioPath,text) 
                             return send_file(os.path.join(app.config['UrInaudioOutput'], audio_dubbed[0]), mimetype='audio/mpeg')
                         except Exception as e:
                             return jsonify({"message": f"Error: {str(e)}", "status": "error"}), 500
@@ -96,6 +103,7 @@ def Dub():
                         speachPath = text_to_speech(filename_without_extension, text) 
                         # '''this code is written for Voice Conversion for any language'''
                         voice_cloning(speachPath,audioPath,clonedVoicePath)
+                        delete_temporary_files(f'./uploads/{filename_with_timestamp}',audioPath,text,speachPath) 
 
                         try:
                             audio_files = os.listdir(app.config['EngInaudioOutput'])
