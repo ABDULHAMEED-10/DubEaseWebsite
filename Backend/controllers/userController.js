@@ -11,61 +11,71 @@ exports.registerUser = catchAsncError(async (req, res, next) => {
     
     const opt = {
         folder: "avatars",
-        width: 150,
+        width: 600,
+        height:600,
         crop: "scale",
     };
     let myCloud; 
     try {
         myCloud = await cloudinary.uploader.upload(req.body.avatar, opt);
-    } catch (error) {
+        const { name, email, password } = req.body;
+    
+   
+        const user = await User.create({
+            name,
+            email,
+            password,
+            avatar: {
+                "public_id": myCloud.public_id,
+                "url": myCloud.secure_url,
+            },
+            createdAt: Date.now(),
+        });
+        sendToken(user, 201, res);
+    }
+    catch (error) {
+        
         res.status(400).json({
             success: false,
-            message: "Image Size Exceed: Allowed less than 1mb",
+            message: "Error while registeration",
         });
-    }
-    const { name, email, password } = req.body;
-    
-    try {
-        const user =await User.create({
-          name,
-          email,
-          password,
-          avatar: {
-            "public_id": myCloud.public_id,
-            "url": myCloud.secure_url,
-          },
-          createdAt: Date.now(), 
-        });
-        sendToken(user,201,res);
-      
-      } catch (error) {
-        if (error.code === 11000 && error.keyPattern.email === 1) {
-            res.status(400).json({success:false, message: 'Email already exists.' });
-          } else {
            
-            res.status(500).json({success:false, message: 'User creation failed.' });
-          }
+          
       }
       
 });
 //login user
 exports.loginUser = catchAsncError(async (req, res, next) => {
     let { email, password } = req.body;
-        if (!email || !password) {
-            return next(new ErrorHandler("Please Enter Email and password", 400));
+        if (!email && !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Please Enter email and password",
+            });
+            
             
         }
         const user = await User.findOne({ email }).select("+password");
         if (!user) {
-            return next(new ErrorHandler("invalid Email and Password"));
-    
+            return res.status(400).json({
+                success: false,
+                message: "Invalid email and Password",
+            });
+            
+            
         }
         const isPasswordMatched = await bcrypt.compare(password, user.password);
         if (!isPasswordMatched) {
-            return next(new ErrorHandler("Invalid email or password", 401));
+            return res.status(400).json({
+                success: false,
+                message: "Invalid Password",
+            });
+            
+
     
-        }
-        sendToken(user, 200, res); 
+    }
+    
+    sendToken(user, 200, res); 
        
 });
 //log out user
@@ -84,27 +94,37 @@ exports.logout = catchAsncError(async (req, res) => {
 
 //forgot password
 exports.forgetPassword = catchAsncError(async (req, res, next) => {
+    //reset password
+ 
     const user = await User.findOne({ email: req.body.email });
-    if (!user) {
-        return next(new ErrorHandler("User not Found", 404));
-    }
-    //get reset Password token
-    const resetToken =  user.getResetPasswordToken() ;
-    
-    
-    await user.save({ validateBeforeSave: false });
    
-
-    const resetPasswordURL = `${req.protocol}://localhost:3000/password/reset/${resetToken}`;
-
-
-    const message = `<p><strong>Subject:</strong> Password Reset Request</p>
+    if (!user) {
+        
+        return res.status(404).json({
+            success: false,
+            message: `No User registered with Email `,
+        });
+         
+    }
+    else {
+        //get reset Password token
+       
+        const resetToken = crypto.randomBytes(20).toString("hex");
+        //hashing and storing in resetpasswordtoken in schema
+        user.resetPasswordToken = crypto
+            .createHash("sha256")
+            .update(resetToken)
+            .digest("hex");
+        user.resetPasswordExpire = Date.now() + 5 * 60 * 1000;
+        await user.save({ validateBeforeSave: false });
+        const resetPasswordURL = `${req.protocol}://localhost:3000/password/reset/${resetToken}`;
+        const message = `<p><strong>Subject:</strong> Password Reset Request</p>
     <br>
     <p>Dear ${user.name},</p>
     <br>
     <p>We have received a request to reset your password for your ${user.name} account.
-    To proceed with the password reset, Please click on the following link:</p>
-    <a href="${resetPasswordURL}">Reset Password</a>
+    To proceed with the password reset, Please copy and paste in Browser on the following link:</p>
+    <p>${resetPasswordURL}</p>
     <br>
     <p>If you did not initiate this request, please ignore this email. Your account is <strong>Secure</strong>, and no changes will be made.</p>
     <br>
@@ -114,26 +134,33 @@ exports.forgetPassword = catchAsncError(async (req, res, next) => {
     <p>Best regards,<br>The DubEase Team</p>`;
    
     
-    try {
-        await sendEmail({
-            email: user.email,
-            subject: "Password Reset Request",
-            message,
-        });
-      
-   
-    res.status(200).json({
-        success: true,
-        message: `Email send to Your account successfully`,
-    });
-   
-    }
-    catch (error) {
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
-        await user.save({ validateBeforeSave: false });
-        return next(new ErrorHandler(error.stack, 500));
+        try {
         
+            await sendEmail({
+                email: user.email,
+                subject: "Password Reset Request",
+                message,
+            });
+         
+      
+            return res.status(200).json({
+                success: true,
+                message: `Email send successfully`,
+                
+            });
+   
+        }
+        catch (error) {
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+            return res.status(500).json({
+                success: false,
+                message: `Email send unsuccessfully`,
+            });
+            // return next(new ErrorHandler(error.stack, 500));
+        
+        }
     }
 });
 
@@ -156,14 +183,19 @@ exports.resetPassword = catchAsncError(async (req, res, next) => {
     
     
     if (!user) {
-       
-        return next(new ErrorHandler("Reset password token is expired or invalid", 400));
+        return res.status(400).json({
+            success: false,
+            message: `Reset Password Token Expire `,
+        });
         
     }
    
    
     if (req.body.password !== req.body.confirmedPassword) {
-        return next(new ErrorHandler("Password does not matched", 400));
+        return res.status(400).json({
+            success: false,
+            message: `Password Does not matched `,
+        });
         
     }
    
@@ -190,16 +222,25 @@ exports.getUserDetails = catchAsncError(async (req, res, next) => {
     
 })
 //update password
-exports.updateUserPassword = catchAsncError(async (req, res, next) => { 
+exports.updateUserPassword = catchAsncError(async (req, res, next) => {
+    
     const user = await User.findById(req.user.id).select("+password");
     
     const isOldPasswordMatched = await bcrypt.compare(req.body.oldPassword,user.password);
     if (!isOldPasswordMatched) {
-        return next(new ErrorHandler("Old Password is incorrect", 401));
+        res.status(401).json({
+            success: false,
+            message: "Invalid old password",
+        });
+        return
 
     }
     if (req.body.newPassword !== req.body.confirmPassword) {
-        return next(new ErrorHandler("Passwords Does not match", 401));
+        res.status(401).json({
+            success: false,
+            message: "password does not match",
+        });
+        return
 
     }
     user.password = req.body.newPassword
@@ -209,39 +250,87 @@ exports.updateUserPassword = catchAsncError(async (req, res, next) => {
     
     
 })
+//delete Account
+exports.deleteUser = catchAsncError(async (req, res, next) => {
+    try {
+        const user = await User.findByIdAndDelete(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+        // const imageId = user.avatar.public_id; 
+        // await cloudinary.uploader.destroy(imageId);
+        res.status(200).json({
+            success: true,
+            message: "Account deleted successfully",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
 //update profile
 exports.updateProfile = catchAsncError(async (req, res, next) => {
-    const newUserData = {
+    try {
+      const newUserData = {
         name: req.body.name,
         email: req.body.email,
       };
-    
+  
       if (req.body.avatar !== "") {
         const user = await User.findById(req.user.id);
-    
         const imageId = user.avatar.public_id;
-    
+          
+          
         await cloudinary.v2.uploader.destroy(imageId);
-    
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
           folder: "avatars",
           width: 150,
           crop: "scale",
         });
-    
+  
         newUserData.avatar = {
           public_id: myCloud.public_id,
           url: myCloud.secure_url,
         };
       }
-    
+  
       const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
         new: true,
         runValidators: true,
         useFindAndModify: false,
       });
-    
+  
       res.status(200).json({
         success: true,
       });
-    });
+    }
+    catch (error) {
+        if (error.code === 11000 && error.keyPattern.email === 1) {
+            return res.status(400).json({ success: false, message: 'Email already exists.' });
+            
+        }
+        if (error.code === 500) {
+            return res.status(500).json({
+                success: false,
+                message: "Image size exceed limits",
+            });
+            
+        }
+
+        else {
+            return res.status(400).json({
+                success: false,
+                message: "Error while updating Profile",
+            });
+            
+           
+          }
+      }
+});
+  

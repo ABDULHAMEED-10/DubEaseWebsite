@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {BrowserRouter as Router, Routes,Route} from "react-router-dom";
 import "../src/CSS/App.css"
 import Profile from './Auth Pages/Profile';
@@ -12,12 +12,10 @@ import { useSelector } from "react-redux";
 import store from './store';
 import { loadUser } from './actions/userAction';
 import StartVideoDubbing from './Home/pages/StartVideoDubbing';
-
-
 import Root from './Home/pages/Root';
 import About from './Home/pages/About';
-import Home from './Home/pages/Home';
-
+import Home from './Home/pages/Homepage';
+import Settings from './Home/pages/Settings';
 
 
 const App = () => {
@@ -25,7 +23,7 @@ const App = () => {
   const {isAuthenticated } = useSelector((state) => state.user);
 
   
-  React.useEffect(() => {
+  useEffect(() => {
     
     store.dispatch(loadUser());
   }, []);
@@ -34,17 +32,16 @@ const App = () => {
     <Router>
       
       <div>
-      
-      
-             
+  
         <Routes>
           
         <Route path="/" element={<Root />}>
             <Route index element={<Home />} />
            
           </Route>
+          <Route path="/settings/*" element={<Settings/>} />
           <Route path="/about" element={<About />} />        
-          
+        
           <Route path="/login" element={<LoginSignUp />} />
           <Route exact path="/password/forgot" element={<Forget />} />
           <Route exact path="/StartVideoDubbing" element={<StartVideoDubbing />} />

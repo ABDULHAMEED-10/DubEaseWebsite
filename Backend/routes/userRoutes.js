@@ -11,7 +11,7 @@ router.route("/me").get(isAuthenticatedUser,getUserDetails);
 router.route("/password/forget").post(forgetPassword);
 router.route("/password/update").put(isAuthenticatedUser,updateUserPassword);
 router.route("/me/update").put( isAuthenticatedUser,updateProfile);
-router.route("/password/reset/:token").put(resetPassword);
+router.route("/delete").delete(isAuthenticatedUser, deleteUser);
 
 
 

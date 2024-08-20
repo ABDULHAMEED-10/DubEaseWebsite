@@ -1,0 +1,330 @@
+.settingmaincontainer {
+  width: 100%;
+  height: 100vh;
+  background-color: #e3dbf2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3%;
+  border: none;
+  /* border: 2px solid yellow; */
+}
+
+.settingheader {
+  width: 85%;
+  height: 10vh;
+  margin-top: 3%;
+  /* border: 2px solid orange; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.settingheaderright {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  
+  /* border: 2px solid red; */
+}
+
+.settingheaderleft {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* border: 2px solid red; */
+  font-weight: bolder;
+  
+}
+.settingcontainer {
+  /* border: 2px solid green; */
+  width: 100%;
+  height: 100vh;
+  background-color: #e3dbf2;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* align-items: center; */
+  color: white;
+  gap: 2%;
+}
+
+.settingleft {
+  width: 40%;
+  height: 60vh;
+  background-color: #463690;
+  /* border: 2px solid red; */
+  /* margin: 05%; */
+  border-radius: 30px;
+  padding: 3%;
+  box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
+
+
+}
+.settingright {
+  padding: 3%;
+  border-radius: 20px;
+  width: 43%;
+  height: 30vh;
+  background-color: #463690;
+  /* border: 2px solid red; */
+  color: white;
+  box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
+
+}
+.settingshdrightpassword {
+  height: 65vh;
+}
+
+.inputdiv {
+  /* border: 2px solid blue; */
+  margin-top: 4%;
+  margin-left: 5%;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+
+.setttingmenu {
+  margin-top: 4%;
+  width: 90%;
+  list-style-type: none; 
+ 
+}
+
+.setttingmenu li div {
+  background-color: #e3dbf2;
+  width: 100%;
+  height: 70px;
+  /* border: 2px solid red; */
+  display: flex;
+  align-items: center;
+  padding-left:2%;
+  font-weight: 500;
+  border-bottom: 2px solid #463690;
+  cursor: pointer;
+}
+
+.settingslabel {
+  font-weight: 400;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.clicked {
+  border-left: 5px solid rgb(33, 32, 32);
+  background-color: rgb(33, 32, 32);
+}
+
+.settingsimg {
+  width: 30px;
+  margin-right: 15px;
+  margin-bottom: 7px;
+  /* color: rgb(95, 175, 207); */
+}
+
+.settingshd {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.settingh4{
+  font-size: large;
+}
+
+
+.svgIcon {
+  width: 15px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+
+
+
+
+
+.languageSelect {
+  width: 11vw; /* Adjust width as needed */
+  height: 3vw; /* Adjust height as needed */
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #e3dbf2;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="%23aaa"><path d="M1408 768q0 26-19 45t-45 19H704q-26 0-45-19t-19-45q0-26 19-45l320-320q19-19 45-19t45 19l320 320q19 19 19 45zm0 512q0 26-19 45l-320 320q-19 19-45 19t-45-19l-320-320q-19-19-19-45 0-26 19-45t45-19h640q26 0 45 19t19 45z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+}
+.languageSelect option {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #e3dbf2;
+}
+
+.languageSelect:focus {
+  outline: none;
+  border: 1px solid #463690;
+}
+
+.inputBox {
+  margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+.btn-lg {
+  padding: 10px 20px; /* Adjust padding as needed */
+  font-size: 18px; /* Adjust font size as needed */
+}
+
+
+.languageSelectContainer {
+  position: relative;
+}
+.DeleteAccount{
+  background-color: #e3dbf2;
+  height: 20vh;
+  width: 40vw;
+}
+.DeleteAccount > div{
+  background-color: #463690;
+  width: 24vw;
+  padding: 1.2rem;
+  gap: 1rem;
+  border-radius: 20px;
+  box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
+
+}
+.DeleteAccount > div > p{
+  font-size: 1rem;
+  
+}
+.ButtonC > button{
+  
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 9vw;
+  background-color: white;
+  color: black;
+
+
+}
+.ButtonC > button:hover{
+  
+  background-color: rgb(33, 32, 32) ;
+  color: white;
+}
+.ButtonC {
+  border: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.apply_ln{
+  background-color: white;
+  color: black;
+  font-size: 1rem;
+
+}
+.apply_ln:hover{
+  background-color: rgb(33, 32, 32);
+  color: white;
+  
+
+}
+
+@media (max-width: 768px) {
+  .settingmaincontainer {
+    flex-direction: column;
+
+  }
+
+  .settingheader {
+    flex-direction: column;
+  }
+  .settingleft, .settingright {
+    width: 100%;
+    border-radius: 0%;
+
+   
+  }
+  .settingshd{
+    margin-bottom: 2rem;
+  }
+  
+  .settingright{
+    height: 30vh;
+  }
+
+  .inputdiv {
+    flex-direction: column;
+  }
+  .setttingmenu {
+    width: 100%;
+    padding: 0%;
+    
+  }
+  .setttingmenu li{
+    padding: 0%;
+  }
+  .settingh4{
+    font-size: 0.8rem;
+  }
+  .settingsimg{
+    width: 10px;
+  }
+  .setttingmenu li div {
+   border-bottom: 5px solid #463690;
+  }
+  
+  .languageSelect {
+    font-size: 12px;
+    padding: 8px;
+    width: 35vw;
+    height: 10vw;
+  }
+  .languageSelect option {
+    font-size: 10px;
+  }
+  .inputdiv{
+    width: 90%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+  }
+  .btn-lg {
+    padding: 2px 8px;
+    font-size: 8px;
+    width: 50%;
+  }
+
+  .DeleteAccount > div{
+    width: 40vw;
+  }
+  .ButtonC > button{
+    width: 40vw;
+  }
+  .apply_ln{
+    font-size: 1rem;
+  }
+
+
+}

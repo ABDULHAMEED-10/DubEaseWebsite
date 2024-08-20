@@ -1,0 +1,392 @@
+/* Nav Right ma jo profile picture or uska dropdown ha */
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 10px;
+  position: relative;
+}
+
+.dropdown-p {
+  width: max-content;
+  visibility: hidden;
+  display: flex;
+  padding: 20px 20px;
+  flex-direction: column;
+  position: absolute;
+  top: 20px;
+  right: -3rem;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.profile:hover .dropdown-p {
+  visibility: visible;
+}
+
+.profile:hover .dropdown__wrapper-p {
+  animation: slide-down 1s ease;
+}
+
+.profile__img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.profile__img img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 30px;
+  left: 4vw;
+  width: 92vw;
+  height: 70px;
+  background-color: black;
+  border-radius: 20px;
+  background-color: white;
+  z-index: 99;
+}
+
+.nav__wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  margin-left: 20px;
+  justify-content: center;
+  font-weight: bold;
+  gap: 2px;
+  color: var(--color-primary);
+}
+
+.logo img {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+}
+
+.logo span {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Nav Center */
+
+.nav__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.nav__center-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  gap: 5px;
+  padding: 5px;
+}
+
+.nav__center-item span {
+  font-size: 1rem;
+  color: #666;
+}
+
+.nav__center-item img {
+  height: 15px;
+  width: 15px;
+  object-fit: contain;
+}
+
+/* Nav Right */
+
+.nav__right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 20px;
+  gap: 10px;
+}
+
+.nav__right-btn {
+}
+
+.dropdown-main {
+  position: relative;
+}
+
+.dropdown {
+  width: max-content;
+  visibility: hidden;
+  display: flex;
+  padding: 20px 20px;
+  flex-direction: column;
+  position: absolute;
+  top: 20px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.dropdown-main:hover .dropdown {
+  visibility: visible;
+}
+.dropdown-main:hover .dropdown__wrapper {
+  animation: slide-down 1s ease;
+}
+
+.dropdown__wrapper,
+.dropdown__wrapper-p {
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 20px 20px;
+
+  background-color: white;
+  margin-top: 20px;
+}
+.dropdown-item,
+.dropdown-item-p {
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.dropdown-item:hover,
+.dropdown-item-p:hover {
+  background-color: var(--grad-rd);
+}
+
+.navham {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.ham-icon {
+  background-color: black;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.ham-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.ham-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100vh;
+  z-index: 999;
+}
+
+.container__wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ham-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.ham-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ham-menu {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: #473690ea;
+  padding: 10px 10px 50px 10px;
+}
+
+.close-icon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.close-icon img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: black;
+}
+
+.ham-list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ham__list-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.tools-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.tools-main img {
+  height: 20px;
+  width: 20px;
+  object-fit: contain;
+  filter: invert(100%);
+}
+
+.tools-items {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.297);
+  padding: 20px;
+  border-radius: 20px;
+  color: var(--grad-blue);
+}
+
+.tools-items span {
+  font-weight: 500;
+  font-size: 1rem;
+  width: 100%;
+  padding: 2px;
+}
+
+.try__btn--reverse {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 20px;
+  gap: 5px;
+}
+
+.try__btn--reverse span {
+  color: var(--txt-blk);
+}
+
+.try__btn--reverse img {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+  background-color: #b9c96f;
+  border-radius: 50%;
+  filter: invert(100%);
+}
+
+@media screen and (max-width: 767px) {
+  .nav__center {
+    display: none;
+  }
+  .navham {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .nav-try {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 250px) {
+  .logo {
+    align-items: center;
+    justify-content: center;
+  }
+  .logo img {
+    height: 20px;
+    width: 20px;
+  }
+  .logo span {
+    font-size: 12px;
+  }
+  .try__btn--reverse {
+    flex-direction: column;
+  }
+  .try__btn--reverse img {
+    height: 20px;
+    width: 20px;
+  }
+  .try__btn--reverse span {
+    font-size: 10px;
+  }
+}
+@keyframes slide-down {
+  from {
+    transform: translateY(-10px);
+    max-height: 0;
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    max-height: 100%;
+    opacity: 1;
+  }
+}

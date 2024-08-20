@@ -6,23 +6,20 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 0%;
-    background-color: black;
-
+    background-color: var(--grad-rd);
     left: 0;
   }
-  input:focus {
-    outline: none;
-    border-color: #4092f6;
-    box-shadow: 0 0 10px #4195fc;
-  }
+
+
   .updateProfileBox {
     box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
-    background-color: rgba(255,255,255,0.13);
+    border-radius: 30px;
+    background-color: #463690;
     width: 25vw;
     height: 70vh;
     box-sizing: border-box;
     overflow: hidden;
+    margin-top: 5%;
   }
   
   .updateProfileHeading {
@@ -62,11 +59,7 @@
     font: 300 1vmax cursive;
     outline: none;
   }
-  .updateProfileForm > div > input:hover {
 
-    background-color: rgb(235, 235, 235);
-
-  }
   
   .updateProfileForm > div > svg {
     position: absolute;
@@ -105,10 +98,10 @@
   
   .updateProfileBtn {
     border: none;
-    background-color: #ffc009;
-    color: #383634;
-    font: 300 1vmax "Roboto";
-    font-weight: bolder;
+    background-color: rgb(33, 32, 32);
+    font: 400 1vmax "Roboto";
+    text-transform: uppercase;
+    color: white;
     width: 100%;
     padding: 0.8vmax;
     cursor: pointer;
@@ -119,20 +112,20 @@
   }
   
   .updateProfileBtn:hover {
-    background-color: #d2a00d;
+    background-color: white;
     color: #000000;
 
   }
-  
+
   @media screen and (max-width: 600px) {
-    .updateProfileContainer {
-      background-color: black;
-    }
+    
     .updateProfileBox {
       width: 100vw;
       height: 95vh;
       box-shadow: rgba(21, 21, 21, 0.25) 0px 14px 28px, rgba(21, 21, 21, 0.25) 0px 10px 10px;
-      background-color: rgba(255,255,255,0.13);
+      border-radius: 0%;
+      margin-top: 25vh;
+      
     }
   
     .updateProfileForm {
@@ -161,5 +154,9 @@
     .updateProfileBtn {
       font: 300 1.9vmax "Roboto";
       padding: 1.8vmax;
+    }
+    .updateProfileHeading{
+      font-size: 3vmax;
+      padding: 2.5vmax;
     }
   }
