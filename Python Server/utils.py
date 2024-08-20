@@ -57,4 +57,5 @@ def delete_folder(file_paths):
             shutil.rmtree(file_path)
         else:
             os.remove(file_path)
+    return True
 

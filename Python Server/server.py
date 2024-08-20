@@ -17,8 +17,8 @@ os.makedirs('./dubOutput', exist_ok=True)
 
 app.config['uploads'] = './uploads'
 app.config['output'] = './dubOutput'
-app.config['UrInaudioOutput'] = '.output/clone/URIn'
-app.config['EngInaudioOutput'] = '.output/clone/EngIn'
+app.config['UrInaudioOutput'] = './output/clone/URIn'
+app.config['EngInaudioOutput'] = './output/clone/EngIn'
 
 
 CORS(app, origins='http://localhost:3000')
