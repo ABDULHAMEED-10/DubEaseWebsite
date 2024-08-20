@@ -50,8 +50,5 @@ def convert_video_to_mp4(video_path):
     subprocess.run(['ffmpeg', '-i', video_path, output_path])
     return output_path
 
-def delete_temporary_files(temp_files):
-    for file in temp_files:
-        if os.path.isfile(file):
-            os.remove(file)
+
          
